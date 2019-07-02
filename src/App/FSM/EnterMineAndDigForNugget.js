@@ -2,7 +2,8 @@
 /*jshint esnext: true*/
 
 import State from "./State.js";
-import SerialModuler from "./SerialModuler.js";
+import VisitBankAndDepositGold from "./VisitBankAndDepositGold.js";
+import QuenchThirst from "./QuenchThirst.js";
 import {LOCATION} from "./Constants.js";
 
 class EnterMineAndDigForNugget extends State{
@@ -33,13 +34,13 @@ class EnterMineAndDigForNugget extends State{
         //@DESC: if enough gold mined, go put in the bank
         let newState;
         if(Miner.isPocketFull()){
-            newState = SerialModuler.VisitBankAndDepositGold;
+            newState = new VisitBankAndDepositGold();
             Miner.changeState(newState);
         }
         
         //@DESC: if thirsty go get a drink!
         if(Miner.isThirsty()){
-            newState = SerialModuler.QuenchThirst;
+            newState = new QuenchThirst();
             Miner.changeState(newState);
         }
     }

@@ -1,8 +1,7 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-//import Engine from "../../App/Engine/Engine.js";
-import SerialModuler from "./SerialModuler.js";
+import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
 import Miner from "./Miner.js";
 
 class Game{
@@ -21,7 +20,7 @@ class Game{
         console.log("initializing game...");
 
         //@DESC: create initial entities in the game.
-        let config = {initState: SerialModuler.EnterMineAndDigForNugget}
+        let config = {initState: new EnterMineAndDigForNugget()};
         const miner = new Miner(config);
 
         //@DESC: add entities to the game.

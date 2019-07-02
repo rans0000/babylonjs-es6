@@ -2,7 +2,8 @@
 /*jshint esnext: true*/
 
 import State from "./State.js";
-import SerialModuler from "./SerialModuler.js";
+import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
+import GoHomeAndSleepTillRested from "./GoHomeAndSleepTillRested.js";
 import {LOCATION} from "./Constants.js";
 
 class VisitBankAndDepositGold extends State{
@@ -29,7 +30,7 @@ class VisitBankAndDepositGold extends State{
 
         //@DESC: decide to continue mining or go home depending on tiredness.
         const isTired = Miner.isTired();
-        const newState = isTired ? SerialModuler.GoHomeAndSleepTillRested : SerialModuler.EnterMineAndDigForNugget;
+        const newState = isTired ? new GoHomeAndSleepTillRested() : new EnterMineAndDigForNugget();
         Miner.changeState(newState);
     }
 
