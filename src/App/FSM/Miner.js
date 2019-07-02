@@ -1,10 +1,10 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import BaseGameEntity from "";
+import BaseGameEntity from "./BaseGameEntity";
 
 class Miner extends BaseGameEntity{
-    constructor(){
+    constructor(options){
         super();
         this.name = "Miner Bob";
         this.currentState = null;
@@ -13,6 +13,8 @@ class Miner extends BaseGameEntity{
         this.moneyAtBank= 0;
         this.thirst = 0;
         this.fatigue = 0;
+        
+        this.currentState = options.initState;
     }
     
     getName(){
@@ -25,6 +27,10 @@ class Miner extends BaseGameEntity{
     
     increaseFatigue(){
         this.fatigue++;
+    }
+    
+    isTired(){
+        return this.fatigue >= Miner.maxFatigue;
     }
     
     addToGoldCarried(){
@@ -69,7 +75,7 @@ class Miner extends BaseGameEntity{
     }
     
     isThirsty(){
-        return this.fatigue >= Miner.maxFatigue;
+        return this.thirst >= Miner.maxThirst;
     }
 
     changeState(newState){
@@ -95,9 +101,14 @@ class Miner extends BaseGameEntity{
             this.currentState.execute(this);
         }
     }
+    
+    render(){
+        
+    }
 }
 
 Miner.maxNuggets = 3;
-Miner.maxFatigue = 80;
+Miner.maxFatigue = 5;
+Miner.maxThirst = 5;
 
 export default Miner;

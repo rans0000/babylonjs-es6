@@ -1,7 +1,8 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import Engine from "../../App/Engine/Engine.js";
+//import Engine from "../../App/Engine/Engine.js";
+import SerialModuler from "./SerialModuler.js";
 import Miner from "./Miner.js";
 
 class Game{
@@ -16,11 +17,12 @@ class Game{
         this.gameLoop = this.gameLoop.bind(this);
     }
 
-    start(options){
+    start(){
         console.log("initializing game...");
 
         //@DESC: create initial entities in the game.
-        const miner = new Miner();
+        let config = {initState: SerialModuler.EnterMineAndDigForNugget}
+        const miner = new Miner(config);
 
         //@DESC: add entities to the game.
         this.addGameObjects([miner]);
@@ -38,14 +40,14 @@ class Game{
     }
 
     update(){
-        console.log("game is updating...");
+        //console.log("game is updating...");
         this.gameEntityList.forEach(gameEntity => {
             gameEntity.update();
         });
     }
 
     render(){
-        console.log("game is rendering...");
+        //console.log("game is rendering...");
         this.gameEntityList.forEach(gameEntity => {
             gameEntity.render();
         });

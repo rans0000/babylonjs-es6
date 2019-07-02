@@ -2,8 +2,7 @@
 /*jshint esnext: true*/
 
 import State from "./State.js";
-import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
-import GoHomeAndSleepTillRested from "./GoHomeAndSleepTillRested.js";
+import SerialModuler from "./SerialModuler.js";
 import {LOCATION} from "./Constants.js";
 
 class VisitBankAndDepositGold extends State{
@@ -24,13 +23,13 @@ class VisitBankAndDepositGold extends State{
 
         const miner = Miner.getName();
         const cashInHand = Miner.getCashInHand();
-        const balance = Miner.getBankBalance();
         Miner.depositGold();
+        const balance = Miner.getBankBalance();
         console.log(`${miner} : deposited ${cashInHand}/- gold. My Account Balance is ${balance}`); 
 
-        //@DESC: decide randomly if continue mining or go home.
-        const continueMining = Math.random() > .5;
-        const newState = continueMining ? new EnterMineAndDigForNugget() : new GoHomeAndSleepTillRested();
+        //@DESC: decide to continue mining or go home depending on tiredness.
+        const isTired = Miner.isTired();
+        const newState = isTired ? SerialModuler.GoHomeAndSleepTillRested : SerialModuler.EnterMineAndDigForNugget;
         Miner.changeState(newState);
     }
 

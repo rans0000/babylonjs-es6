@@ -15,3 +15,5 @@ class State{
         throw({error_mssg: "exit method is virtual. Impliment class specific  definition."});
     }
 }
+
+export default State;

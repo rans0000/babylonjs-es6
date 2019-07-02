@@ -1,10 +1,17 @@
+/*jshint browser: true*/
+/*jshint esnext: true*/
 
 module.exports = {
-    entry: './src/main.js',
+    entry: {
+        fsm: './src/App/FSM/main.js'
+    },
     output: {
-        filename: './src/bundle.js',
+        filename: './src/[name].js'
     },
     watch: true,
+    devServer: {
+        port: 9000
+    },
     module: {
         rules: [
             {

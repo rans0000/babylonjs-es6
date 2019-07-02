@@ -2,7 +2,7 @@
 /*jshint esnext: true*/
 
 import State from "./State.js";
-import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
+import SerialModuler from "./SerialModuler.js";
 import {LOCATION} from "./Constants.js";
 
 class GoHomeAndSleepTillRested extends State{
@@ -26,7 +26,7 @@ class GoHomeAndSleepTillRested extends State{
         //@DESC: get up and go mining if miner is well rested.
         if(Miner.isWellRested()){
             console.log(Miner.getName(), ": ooooh... good morning.");
-            const newState = new EnterMineAndDigForNugget();
+            const newState = SerialModuler.EnterMineAndDigForNugget;
             Miner.changeState(newState);
         }
     }
