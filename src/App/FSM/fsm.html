@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>FSM test</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <canvas id="canvasElement"></canvas>
+        </div>
+        <script src="Game.js" type="module"></script>
+        <script type="module">
+            import Game from './Game.js';
+
+            let game = new Game({fps: 60});
+            game.start();
+        </script>
+    </body>
+</html>
