@@ -2,23 +2,30 @@
 /*jshint esnext: true*/
 
 import BaseGameEntity from "../BaseGameEntity/BaseGameEntity";
+import StateMachine from "../FSM/StateMachine";
+import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
 
 class Miner extends BaseGameEntity{
-    constructor(options){
+    constructor(){
         super();
         this.name = "Miner Bob";
-        this.currentState = null;
         this.location = undefined;
         this.goldCarried = 0;
         this.moneyAtBank= 0;
         this.thirst = 0;
         this.fatigue = 0;
         
-        this.currentState = options.initState;
+        this.stateMachine = new StateMachine(this);
+        this.stateMachine.setCurrentState(new EnterMineAndDigForNugget());
+        this.stateMachine.setGlobalState(new EnterMineAndDigForNugget());
     }
     
     getName(){
         return `${this.name} id:(${this.id})`;
+    }
+    
+    getFSM(){
+        return this.stateMachine;
     }
     
     changeLocation(location){
@@ -78,28 +85,18 @@ class Miner extends BaseGameEntity{
         return this.thirst >= Miner.maxThirst;
     }
 
-    changeState(newState){
+    changeState(_newState){
         
-        //@DESC: make sure both states are valid before calling them
-        if(!this.currentState || !newState){
-            return;
-        }
-        
-        //@DESC: call exit method of current existing state 
-        this.currentState.exit(this);
-        
-        //@DESC: change state to new state
-        this.currentState = newState;
-        
-        //@DESC: call entry menthod of new State
-        this.currentState.enter(this);
+        this.stateMachine.changeState(_newState);
+    }
+    
+    revertToPreviousState(){
+        this.stateMachine.revertToPreviousState();
     }
 
     update(){
         this.thirst++;
-        if(this.currentState){
-            this.currentState.execute(this);
-        }
+        this.stateMachine.update();
     }
     
     render(){

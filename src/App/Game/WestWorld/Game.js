@@ -1,7 +1,6 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import EnterMineAndDigForNugget from "../../Classes/Miner/EnterMineAndDigForNugget.js";
 import Miner from "../../Classes/Miner/Miner.js";
 
 class Game{
@@ -20,8 +19,7 @@ class Game{
         console.log("initializing game...");
 
         //@DESC: create initial entities in the game.
-        let config = {initState: new EnterMineAndDigForNugget()};
-        const miner = new Miner(config);
+        const miner = new Miner();
 
         //@DESC: add entities to the game.
         this.addGameObjects([miner]);
