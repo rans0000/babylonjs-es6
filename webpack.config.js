@@ -6,7 +6,8 @@ module.exports = {
         fsm: './src/App/FSM/main.js'
     },
     output: {
-        filename: './src/[name].js'
+        publicPath: "/",
+        filename: './[name].js'
     },
     watch: true,
     devServer: {

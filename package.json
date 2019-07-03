@@ -17,6 +17,7 @@
     "style-loader": "^0.23.1"
   },
   "scripts": {
+    "start": "webpack-dev-server --content-base src/ --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
