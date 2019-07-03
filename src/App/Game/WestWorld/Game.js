@@ -2,6 +2,7 @@
 /*jshint esnext: true*/
 
 import Miner from "../../Classes/Miner/Miner.js";
+import Wife from "../../Classes/Wife/Wife.js";
 
 class Game{
     constructor(options){
@@ -20,9 +21,10 @@ class Game{
 
         //@DESC: create initial entities in the game.
         const miner = new Miner();
+        const wife = new Wife();
 
         //@DESC: add entities to the game.
-        this.addGameObjects([miner]);
+        this.addGameObjects([miner, wife]);
         
         //@DESC: start game looop.
         this.gameLoop();
