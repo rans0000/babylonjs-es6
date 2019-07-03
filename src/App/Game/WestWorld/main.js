@@ -3,5 +3,6 @@
 
 import Game from './Game.js';
 
-let game = new Game({fps: 60});
+const canvas = document.getElementById('canvasElement').getContext('2d');
+const game = new Game({fps: 60, slow: 100, canvas});
 game.start();

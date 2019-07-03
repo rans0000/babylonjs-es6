@@ -63,6 +63,7 @@ class Miner extends BaseGameEntity{
     
     buyItem(gold, item){
         this.moneyAtBank -= gold;
+        console.log(this.getName(), ": bought ", item, " for $", gold);
     }
     
     takeRest(){

@@ -1,8 +1,6 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "./State.js";
-
 class StateMachine{
     constructor(_owner){
         this.owner = _owner;
@@ -36,7 +34,6 @@ class StateMachine{
     changeState(_newState){
         if(!_newState){
             throw {error_mssg: "Trying to change to a null state."};
-            return;
         }
 
         //@DESC: keep track of previous state.

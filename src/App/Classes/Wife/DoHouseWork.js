@@ -23,7 +23,7 @@ class DoHouseWork extends State{
         console.log(Wife.getName(), ": Cleaning the room.");
         
         //@DESC: go to restroom 1/10th of the time.
-        if(Math.random() < .1){
+        if(Math.random() < 0.1){
             const newState = new VisitRestRoom();
             Wife.changeState(newState);
         }

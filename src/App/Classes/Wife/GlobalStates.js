@@ -3,7 +3,6 @@
 
 import State from "../FSM/State.js";
 import {LOCATION} from "../../Utils/Constants.js";
-import DoHouseWork from "./DoHouseWork.js";
 
 class VisitRestRoom extends State{
     constructor(){
