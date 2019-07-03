@@ -5,7 +5,9 @@ const LOCATION = {
     GOLD_MINE: "GOLD_MINE",
     BANK: "BANK",
     SALOON: "SALOON",
-    HOME: "HOME"
+    HOME: "HOME",
+    KITCHEN: "KITCHEN",
+    RESTROOM: "RESTROOM"
 };
 
 Object.freeze(LOCATION);
