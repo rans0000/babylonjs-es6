@@ -3,7 +3,7 @@
 
 module.exports = {
     entry: {
-        fsm: './src/App/FSM/main.js'
+        fsm: './src/App/Game/WestWorld/main.js'
     },
     output: {
         publicPath: "/",

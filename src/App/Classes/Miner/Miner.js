@@ -1,7 +1,7 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import BaseGameEntity from "./BaseGameEntity";
+import BaseGameEntity from "../BaseGameEntity/BaseGameEntity";
 
 class Miner extends BaseGameEntity{
     constructor(options){

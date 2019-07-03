@@ -1,8 +1,8 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
-import Miner from "./Miner.js";
+import EnterMineAndDigForNugget from "../../Classes/Miner/EnterMineAndDigForNugget.js";
+import Miner from "../../Classes/Miner/Miner.js";
 
 class Game{
     constructor(options){

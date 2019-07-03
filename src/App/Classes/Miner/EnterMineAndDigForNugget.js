@@ -1,10 +1,10 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "./State.js";
+import State from "../FSM/State.js";
 import VisitBankAndDepositGold from "./VisitBankAndDepositGold.js";
 import QuenchThirst from "./QuenchThirst.js";
-import {LOCATION} from "./Constants.js";
+import {LOCATION} from "../../Utils/Constants.js";
 
 class EnterMineAndDigForNugget extends State{
     constructor(){
