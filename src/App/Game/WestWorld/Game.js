@@ -4,16 +4,25 @@
 import Miner from "../../Classes/Miner/Miner.js";
 import Wife from "../../Classes/Wife/Wife.js";
 
+let instance = null;
 class Game{
     constructor(options){
-        this.dt = 0;
-        this.last = window.performance.now();
-        this.slow = options.slow || 1;
-        this.step = 1/options.fps;
-        this.slowStep = this.slow * this.step;
-        this.gameEntityList = [];
-        
-        this.gameLoop = this.gameLoop.bind(this);
+        if(!instance){
+            instance = this;
+            this._type = 'Game';
+            
+            this.dt = 0;
+            this.ticks = 0;
+            this.last = window.performance.now();
+            this.slow = options.slow || 1;
+            this.step = 1/options.fps;
+            this.slowStep = this.slow * this.step;
+            this.gameEntityList = [];
+
+            this.gameLoop = this.gameLoop.bind(this);
+        }
+
+        return instance;
     }
 
     start(){
@@ -25,7 +34,7 @@ class Game{
 
         //@DESC: add entities to the game.
         this.addGameObjects([miner, wife]);
-        
+
         //@DESC: start game looop.
         this.gameLoop();
     }
@@ -58,10 +67,11 @@ class Game{
         while(this.dt > this.slowStep){
             this.dt = this.dt - this.slowStep;
             this.update(this.step);
+            ++this.ticks;
         }
-        
+
         this.render(this.dt/this.slow);
-        
+
         this.last = now;
         window.requestAnimationFrame(this.gameLoop);
     }
