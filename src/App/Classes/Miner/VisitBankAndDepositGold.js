@@ -1,10 +1,10 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "../FSM/State.js";
-import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget.js";
-import GoHomeAndSleepTillRested from "./GoHomeAndSleepTillRested.js";
-import {LOCATION} from "../../Utils/Constants.js";
+import State from "../FSM/State";
+import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
+import GoHomeAndSleepTillRested from "./GoHomeAndSleepTillRested";
+import {LOCATION} from "../../Utils/Constants";
 
 class VisitBankAndDepositGold extends State{
     constructor(){

@@ -1,8 +1,8 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import Miner from "../../Classes/Miner/Miner.js";
-import Wife from "../../Classes/Wife/Wife.js";
+import Miner from "../../Classes/Miner/Miner";
+import Wife from "../../Classes/Wife/Wife";
 
 let instance = null;
 class Game{

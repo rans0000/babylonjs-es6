@@ -1,8 +1,8 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "../FSM/State.js";
-import {LOCATION} from "../../Utils/Constants.js";
+import State from "../FSM/State";
+import {LOCATION} from "../../Utils/Constants";
 
 class VisitRestRoom extends State{
     constructor(){

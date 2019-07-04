@@ -1,9 +1,9 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "../FSM/State.js";
-import {LOCATION} from "../../Utils/Constants.js";
-import {VisitRestRoom} from "./GlobalStates.js";
+import State from "../FSM/State";
+import {LOCATION} from "../../Utils/Constants";
+import {VisitRestRoom} from "./GlobalStates";
 
 class DoHouseWork extends State{
     constructor(){
