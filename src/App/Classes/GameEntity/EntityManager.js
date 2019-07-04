@@ -39,8 +39,8 @@ class EntityManager{
     }
 
     removeEntity(_id){
-        let entity = this.entityMap[`${_id}`];
-        if(!entity){
+        let entityMap = this.entityMap[`${_id}`];
+        if(!entityMap){
             throw {error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such id  exists.`};
         }
         if(entityMap.inWorld){
@@ -53,7 +53,7 @@ class EntityManager{
             }
         }
         
-        entity = null;
+        entityMap = null;
         delete this.entityMap[`${_id}`];
     }
     
