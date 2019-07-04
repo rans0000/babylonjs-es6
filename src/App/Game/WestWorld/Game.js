@@ -3,21 +3,21 @@
 
 import Miner from "../../Classes/Miner/Miner";
 import Wife from "../../Classes/Wife/Wife";
+import EntityManager from "../../Classes/GameEntity/EntityManager";
 
 let instance = null;
 class Game{
     constructor(options){
         if(!instance){
             instance = this;
-            this._type = 'Game';
-            
+            this._type = "Game";
+
             this.dt = 0;
             this.ticks = 0;
             this.last = window.performance.now();
             this.slow = options.slow || 1;
             this.step = 1/options.fps;
             this.slowStep = this.slow * this.step;
-            this.gameEntityList = [];
 
             this.gameLoop = this.gameLoop.bind(this);
         }
@@ -33,30 +33,23 @@ class Game{
         const wife = new Wife();
 
         //@DESC: add entities to the game.
-        this.addGameObjects([miner, wife]);
+        EntityManager.registerEntity(miner);
+        EntityManager.registerEntity(wife);
 
         //@DESC: start game looop.
         this.gameLoop();
     }
 
-    addGameObject(gameEntity){
-        this.gameEntityList.push(gameEntity);
-    }
-
-    addGameObjects(gameEntityList){
-        this.gameEntityList = [...this.gameEntityList, ...gameEntityList];
-    }
-
     update(){
         //console.log("game is updating...");
-        this.gameEntityList.forEach(gameEntity => {
+        EntityManager.getGameEntityList().forEach(gameEntity => {
             gameEntity.update();
         });
     }
 
     render(){
         //console.log("game is rendering...");
-        this.gameEntityList.forEach(gameEntity => {
+        EntityManager.getGameEntityList().forEach(gameEntity => {
             gameEntity.render();
         });
     }
