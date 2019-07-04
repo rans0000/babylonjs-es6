@@ -1,7 +1,7 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import BaseGameEntity from "../BaseGameEntity/BaseGameEntity";
+import BaseGameEntity from "../GameEntity/BaseGameEntity";
 import StateMachine from "../FSM/StateMachine";
 import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
 
