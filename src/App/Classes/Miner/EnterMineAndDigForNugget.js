@@ -35,13 +35,13 @@ class EnterMineAndDigForNugget extends State{
         let newState;
         if(Miner.isPocketFull()){
             newState = new VisitBankAndDepositGold();
-            Miner.changeState(newState);
+            Miner.getFSM().changeState(newState);
         }
         
         //@DESC: if thirsty go get a drink!
         if(Miner.isThirsty()){
             newState = new QuenchThirst();
-            Miner.changeState(newState);
+            Miner.getFSM().changeState(newState);
         }
     }
     

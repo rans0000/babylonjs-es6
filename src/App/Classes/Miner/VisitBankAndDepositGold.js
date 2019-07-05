@@ -31,7 +31,7 @@ class VisitBankAndDepositGold extends State{
         //@DESC: decide to continue mining or go home depending on tiredness.
         const isTired = Miner.isTired();
         const newState = isTired ? new GoHomeAndSleepTillRested() : new EnterMineAndDigForNugget();
-        Miner.changeState(newState);
+        Miner.getFSM().changeState(newState);
     }
 
     exit(Miner){

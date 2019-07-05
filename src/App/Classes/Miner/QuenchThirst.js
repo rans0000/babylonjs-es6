@@ -28,7 +28,7 @@ class QuenchThirst extends State{
         if(Miner.isThirstQuenched()){
             console.log(Miner.getName(), ": ahhh... refreshing drinks.");
             const newState = new EnterMineAndDigForNugget();
-            Miner.changeState(newState);
+            Miner.getFSM().changeState(newState);
         }
     }
 

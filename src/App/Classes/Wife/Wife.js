@@ -29,16 +29,8 @@ class Wife extends BaseGameEntity{
         this.location = _location;
     }
     
-    changeState(_newState){
-        this.stateMachine.changeState(_newState);
-    }
-    
     update(){
         this.stateMachine.update();
-    }
-    
-    revertToPreviousState(){
-        this.stateMachine.revertToPreviousState();
     }
     
     render(){

@@ -22,7 +22,7 @@ class VisitRestRoom extends State{
 
         //@DESC: get back to whatever Elsa was doing previously.
         if(Wife.getFSM().getPreviousState()){
-            Wife.revertToPreviousState();
+            Wife.getFSM().revertToPreviousState();
         }
     }
 

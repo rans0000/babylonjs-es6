@@ -17,7 +17,7 @@ class Miner extends BaseGameEntity{
         
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new EnterMineAndDigForNugget());
-        this.stateMachine.setGlobalState(new EnterMineAndDigForNugget());
+        //Miner has no global states.
     }
     
     getName(){
@@ -84,15 +84,6 @@ class Miner extends BaseGameEntity{
     
     isThirsty(){
         return this.thirst >= Miner.maxThirst;
-    }
-
-    changeState(_newState){
-        
-        this.stateMachine.changeState(_newState);
-    }
-    
-    revertToPreviousState(){
-        this.stateMachine.revertToPreviousState();
     }
 
     update(){

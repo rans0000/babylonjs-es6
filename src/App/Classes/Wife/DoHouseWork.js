@@ -25,7 +25,7 @@ class DoHouseWork extends State{
         //@DESC: go to restroom 1/10th of the time.
         if(Math.random() < 0.1){
             const newState = new VisitRestRoom();
-            Wife.changeState(newState);
+            Wife.getFSM().changeState(newState);
         }
     }
     

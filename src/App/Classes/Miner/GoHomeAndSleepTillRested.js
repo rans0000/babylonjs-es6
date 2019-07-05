@@ -27,7 +27,7 @@ class GoHomeAndSleepTillRested extends State{
         if(Miner.isWellRested()){
             console.log(Miner.getName(), ": ooooh... good morning.");
             const newState = new EnterMineAndDigForNugget();
-            Miner.changeState(newState);
+            Miner.getFSM().changeState(newState);
         }
     }
 
