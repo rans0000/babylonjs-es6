@@ -1,9 +1,9 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import State from "../FSM/State";
+import State from "../../../../Classes/FSM/State";
 import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
-import {LOCATION} from "../../Utils/Constants";
+import {LOCATION} from "../../../../Utils/Constants";
 
 class QuenchThirst extends State{
     constructor(){

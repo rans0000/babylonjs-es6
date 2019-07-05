@@ -1,8 +1,8 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import BaseGameEntity from "../GameEntity/BaseGameEntity";
-import StateMachine from "../FSM/StateMachine";
+import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
+import StateMachine from "../../../../Classes/FSM/StateMachine";
 import DoHouseWork from "./DoHouseWork";
 import {VisitRestRoom} from "./GlobalStates";
 
