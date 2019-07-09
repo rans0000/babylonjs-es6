@@ -4,6 +4,8 @@
 import Miner from "./Data/Miner/Miner";
 import Wife from "./Data/Wife/Wife";
 import EntityManager from "../../Classes/GameEntity/EntityManager";
+import MessageDispatcher from "../../Classes/Message/MessageDispatcher";
+import Utils from "../../Utils/Utils";
 
 let instance = null;
 class Game{
@@ -59,6 +61,7 @@ class Game{
         this.dt = this.dt + Math.min(1, (now - this.last) / 1000);
         while(this.dt > this.slowStep){
             this.dt = this.dt - this.slowStep;
+            MessageDispatcher.dispatchQueuedMessages();
             this.update(this.step);
             ++this.ticks;
         }

@@ -14,6 +14,10 @@ class State{
     exit(){
         throw({error_mssg: "exit method is virtual. Impliment class specific  definition."});
     }
+    
+    onMessage(entity, message){
+        //@DESC: This executes if the agent recieves a message from the message dispatcher.
+    }
 }
 
 export default State;

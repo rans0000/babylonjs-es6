@@ -11,6 +11,7 @@ class Wife extends BaseGameEntity{
         super();
         this.name = "Elsa";
         this.location = undefined;
+        this.cooking = false;
         
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new DoHouseWork());
@@ -27,6 +28,18 @@ class Wife extends BaseGameEntity{
     
     changeLocation(_location){
         this.location = _location;
+    }
+    
+    setCooking(status){
+        this.cooking = status;
+    }
+    
+    isCooking(){
+        return this.cooking;
+    }
+    
+    handleMessage(message){
+        this.getFSM().handleMessage(message);
     }
     
     update(){

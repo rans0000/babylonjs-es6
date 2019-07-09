@@ -85,6 +85,10 @@ class Miner extends BaseGameEntity{
     isThirsty(){
         return this.thirst >= Miner.maxThirst;
     }
+    
+    handleMessage(message){
+        this.getFSM().handleMessage(message);
+    }
 
     update(){
         this.thirst++;

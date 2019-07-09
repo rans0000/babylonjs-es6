@@ -57,6 +57,22 @@ class StateMachine{
     isInState(_state){
         return this.currentState.constructor === _state.constructor;
     }
+    
+    handleMessage(message){
+        let isMessageHandled = false;
+        
+        //@DESC: First see if the current state can handle the message
+        if(this.currentState && this.currentState.onMessage(this.owner, message)){
+            isMessageHandled = true;
+        }
+        
+        //@DESC: if not in current state and a global state is implemented , send the message to the global state.
+        if(this.globalState && this.globalState.onMessage(this.owner, message)){
+            isMessageHandled = true;
+        }
+        
+        return isMessageHandled;
+    }
 }
 
 export default StateMachine;

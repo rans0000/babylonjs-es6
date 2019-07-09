@@ -17,6 +17,11 @@ class BaseGameEntity{
     getId(){
         return this.id;
     }
+    
+    handleMessage(message){
+        //@DESC: All subclasses can communicate using messages.
+        throw({error_mssg: "render method is virtual. Impliment class specific definition."});
+    }
 }
 
 BaseGameEntity.nextId = 0;
