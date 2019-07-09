@@ -11,5 +11,14 @@ const LOCATION = {
 };
 
 Object.freeze(LOCATION);
+//-----------------------------------------------
 
-export {LOCATION};
+const MSG_TYPE = {
+    ARRIVED_HOME: "ARRIVED_HOME",
+    STEW_READY: "STEW_READY"
+};
+
+Object.freeze(MSG_TYPE);
+//-----------------------------------------------
+
+export {LOCATION, MSG_TYPE};
