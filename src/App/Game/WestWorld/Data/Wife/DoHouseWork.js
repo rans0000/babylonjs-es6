@@ -3,7 +3,8 @@
 
 import State from "../../../../Classes/FSM/State";
 import {LOCATION} from "../../../../Utils/Constants";
-import {VisitRestRoom} from "./GlobalStates";
+import GlobalStates from "./GlobalStates";
+import VisitRestRoom from "./VisitRestRoom";
 
 class DoHouseWork extends State{
     constructor(){

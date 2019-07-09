@@ -4,7 +4,7 @@
 import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
 import StateMachine from "../../../../Classes/FSM/StateMachine";
 import DoHouseWork from "./DoHouseWork";
-import {VisitRestRoom} from "./GlobalStates";
+import GlobalStates from "./GlobalStates";
 
 class Wife extends BaseGameEntity{
     constructor(){
@@ -14,7 +14,7 @@ class Wife extends BaseGameEntity{
         
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new DoHouseWork());
-        this.stateMachine.setGlobalState(new VisitRestRoom());
+        this.stateMachine.setGlobalState(new GlobalStates());
     }
     
     getName(){
