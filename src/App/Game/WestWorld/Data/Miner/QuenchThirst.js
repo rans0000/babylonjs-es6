@@ -2,8 +2,10 @@
 /*jshint esnext: true*/
 
 import State from "../../../../Classes/FSM/State";
+import MessageDispatcher from "../../../../Classes/Message/MessageDispatcher";
 import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
-import {LOCATION} from "../../../../Utils/Constants";
+import Fight from "./Fight";
+import {LOCATION, MSG_TYPE} from "../../../../Utils/Constants";
 
 class QuenchThirst extends State{
     constructor(){
@@ -15,6 +17,10 @@ class QuenchThirst extends State{
         if(Miner.location !== LOCATION.SALOON){
             console.log(Miner.getName(), ": goin' to get myself a drink.");
             Miner.changeLocation(LOCATION.SALOON);
+
+            const JoeId = 2;
+            const MinerId = Miner.getId();
+            MessageDispatcher.dispatchMessage(0, MinerId, JoeId, MSG_TYPE.ARRIVED_SALOON);
         }
     }
 
@@ -22,7 +28,7 @@ class QuenchThirst extends State{
 
         //@DESC: buy some drink and quench that thirst.
         Miner.buyItem(1, "drink");
-        Miner.quenchThirst(100);
+        Miner.quenchThirst(5);
 
         //@DESC: get up and go mining if miner is well rested.
         if(Miner.isThirstQuenched()){
@@ -33,7 +39,28 @@ class QuenchThirst extends State{
     }
 
     exit(Miner){
-        console.log(Miner.getName(), ": Am leaving saloon.");
+        if(Miner.isThirstQuenched()){
+            console.log(Miner.getName(), ": Drinked up to the brim.");
+        }
+        else{
+            console.log(Miner.getName(), ": Drinks can wait.");
+        }
+    }
+
+    onMessage(Miner, message){
+        let isMessageHandled = false;
+
+        switch(message.messageType) {
+            case MSG_TYPE.FIGHTING:
+                const newState = new Fight();
+                Miner.getFSM().changeState(newState);
+                isMessageHandled = true;
+                break;
+            default:
+                break;
+        }
+
+        return isMessageHandled;
     }
 }
 

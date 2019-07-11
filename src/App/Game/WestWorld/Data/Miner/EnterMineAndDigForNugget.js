@@ -22,7 +22,7 @@ class EnterMineAndDigForNugget extends State{
     execute(Miner){
         //@DESC: The miner digs for gold until he is caryin in excess of Maxnuggets
         //If he gets thirsty during digging, stops work and
-        //changes stte to go to saloon
+        //changes state to go to saloon
         
         Miner.addToGoldCarried();
         

@@ -14,6 +14,7 @@ class Miner extends BaseGameEntity{
         this.moneyAtBank= 0;
         this.thirst = 0;
         this.fatigue = 0;
+        this.fighting = false;
         
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new EnterMineAndDigForNugget());
@@ -32,8 +33,24 @@ class Miner extends BaseGameEntity{
         this.location = location;
     }
     
-    increaseFatigue(){
-        this.fatigue++;
+    isFighting(){
+        return this.fighting;
+    }
+    
+    setFighting(fighting){
+        this.fighting = fighting;
+    }
+    
+    increaseFatigue(fatigue = 1){
+        this.fatigue = Math.min(this.fatigue + fatigue, Miner.maxFatigue);
+    }
+    
+    decreaseFatigue(fatigue = 1){
+        this.fatigue = Math.max(this.fatigue - fatigue, 0);
+    }
+    
+    getFatigue(){
+        return this.fatigue;
     }
     
     isTired(){
@@ -67,14 +84,14 @@ class Miner extends BaseGameEntity{
     }
     
     takeRest(){
-        this.fatigue--;
+        this.decreaseFatigue();
     }
     
     isWellRested(){
         return this.fatigue <= 0;
     }
     
-    quenchThirst(quenchValue){
+    quenchThirst(quenchValue = 1){
         this.thirst -= quenchValue;
     }
     
@@ -101,7 +118,8 @@ class Miner extends BaseGameEntity{
 }
 
 Miner.maxNuggets = 3;
-Miner.maxFatigue = 5;
-Miner.maxThirst = 5;
+Miner.minFatigue = 5;
+Miner.maxFatigue = 100;
+Miner.maxThirst = 70;
 
 export default Miner;

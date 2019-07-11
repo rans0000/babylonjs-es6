@@ -43,7 +43,7 @@ class MessageDispatcher{
         //@DESC: this method runs every update cycle and checks any message has expired timestamps.
         //if yes, then they are dispatched to the recipient along the message.
         //once done, the message is removed from the queue.
-        
+
         const gameInstance = new Game();
         const currentTime = gameInstance.ticks;
         let removedMessages = [];
@@ -64,10 +64,8 @@ class MessageDispatcher{
         }
         removedMessages = [];
     }
-    
+
     discharge(reciverId, message){
-        //@TODO: def
-        //const entityManager = EntityManager;
         const reciver = EntityManager.getEntityById(reciverId);
         reciver.handleMessage(message);
     }

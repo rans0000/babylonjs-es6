@@ -1,10 +1,11 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import Miner from "./Data/Miner/Miner";
-import Wife from "./Data/Wife/Wife";
 import EntityManager from "../../Classes/GameEntity/EntityManager";
 import MessageDispatcher from "../../Classes/Message/MessageDispatcher";
+import Miner from "./Data/Miner/Miner";
+import Wife from "./Data/Wife/Wife";
+import Joe from "./Data/Joe/Joe";
 import Utils from "../../Utils/Utils";
 
 let instance = null;
@@ -33,10 +34,12 @@ class Game{
         //@DESC: create initial entities in the game.
         const miner = new Miner();
         const wife = new Wife();
+        const joe = new Joe();
 
         //@DESC: add entities to the game.
         EntityManager.registerEntity(miner);
         EntityManager.registerEntity(wife);
+        EntityManager.registerEntity(joe);
 
         //@DESC: start game looop.
         this.gameLoop();

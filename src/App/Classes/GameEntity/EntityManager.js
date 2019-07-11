@@ -34,7 +34,7 @@ class EntityManager{
         if(_inWorld){
             this.gameEntityList.push(_entity);
         }
-        
+
         return _entity;
     }
 
@@ -52,11 +52,11 @@ class EntityManager{
                 throw {error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such entity found in gameEntityList.`};
             }
         }
-        
+
         entityMap = null;
         delete this.entityMap[`${_id}`];
     }
-    
+
     getGameEntityList(){
         return this.gameEntityList;
     }
