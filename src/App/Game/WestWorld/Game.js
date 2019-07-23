@@ -11,7 +11,7 @@ import Utils from "../../Utils/Utils";
 let instance = null;
 class Game{
     constructor(options){
-        if(!instance){
+        if(!instance && options){
             instance = this;
             this._type = "Game";
 
