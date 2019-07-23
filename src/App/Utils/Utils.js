@@ -22,7 +22,9 @@ class Utils{
             if (array[mid] < value) {
                 low = mid + 1;
             }
-            else high = mid;
+            else{
+                high = mid;
+            }
         }
         array.splice(low, 0,value);
         return array;
@@ -37,7 +39,9 @@ class Utils{
             if (array[mid][key] < value) {
                 low = mid + 1;
             }
-            else high = mid;
+            else{
+                high = mid;
+            }
         }
         array.splice(low, 0, value);
         return array;

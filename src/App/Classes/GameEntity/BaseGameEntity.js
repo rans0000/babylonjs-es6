@@ -10,8 +10,8 @@ class BaseGameEntity{
         throw({error_mssg: "Update method is virtual. Impliment class specific definition."});
     }
 
-    render(){
-        throw({error_mssg: "render method is virtual. Impliment class specific definition."});
+    addToScene(_scene){
+        throw({error_mssg: "addToScene method is virtual. Impliment class specific definition."});
     }
 
     getId(){

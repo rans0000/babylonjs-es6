@@ -23,13 +23,16 @@ class EntityManager{
         return instance;
     }
 
-    registerEntity(_entity, _inWorld = true){
+    registerEntity(_entity, _scene, _inWorld = true){
         //@DESC: Registers an entity to the game.
         this.entityMap[`${_entity.id}`] = {
             id: _entity.id,
             inWorld: _inWorld,
             ref: _entity
         };
+        
+        _entity.addToScene(_scene);
+        
         //@DESC: Add it to the game loop if inWorld is true
         if(_inWorld){
             this.gameEntityList.push(_entity);
@@ -41,7 +44,7 @@ class EntityManager{
     removeEntity(_id){
         let entityMap = this.entityMap[`${_id}`];
         if(!entityMap){
-            throw {error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such id  exists.`};
+            throw {error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such id exists.`};
         }
         if(entityMap.inWorld){
             const index = this.gameEntityList.findIndex(entity => entity.id === _id);

@@ -3,7 +3,8 @@
 
 module.exports = {
     entry: {
-        fsm: './src/App/Game/WestWorld/main.js'
+        fsm: './src/App/Game/WestWorld/main.js',
+        steering: './src/App/Game/Steering/main.js'
     },
     output: {
         publicPath: "/",
