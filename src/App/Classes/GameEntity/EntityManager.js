@@ -30,11 +30,11 @@ class EntityManager{
             inWorld: _inWorld,
             ref: _entity
         };
-        
-        _entity.addToScene(_scene);
-        
-        //@DESC: Add it to the game loop if inWorld is true
+
+
         if(_inWorld){
+            //@DESC: Add entity to the game loop and connect its 3dmesh if inWorld is true
+            _entity.addToScene(_scene);
             this.gameEntityList.push(_entity);
         }
 
@@ -50,6 +50,7 @@ class EntityManager{
             const index = this.gameEntityList.findIndex(entity => entity.id === _id);
             if(index > -1){
                 this.gameEntityList.splice(index, 1);
+                //@TODO: Remove entity's 3dmesh from the scene
             }
             else{
                 throw {error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such entity found in gameEntityList.`};
