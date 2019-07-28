@@ -1,12 +1,17 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
+import { Vector3 } from "@babylonjs/core/Maths/math";
+
 class BaseGameEntity{
-    constructor(){
+    constructor(config){
         this.id = BaseGameEntity.nextId++;
+        this.scale = config.scale || 1;
+        this.boundigRadius = config.boundigRadius;
+        this.tagged = config.tagged || false;
     }
 
-    update(){
+    update(_timeInterval){
         throw({error_mssg: "Update method is virtual. Impliment class specific definition."});
     }
 
