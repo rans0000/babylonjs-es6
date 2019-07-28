@@ -40,24 +40,11 @@ class Game{
             camera.attachControl(canvas, true);
             let light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
             light.intensity = 0.7;
-            
+
             //@DESC: create basic ground
             let material = new GridMaterial("grid", this.scene);
             let ground = Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
             ground.material = material;
-
-            //@DESC: create initial entities in the game.
-            const vehicle = new Vehicle({
-                scale: 16,
-                boundigRadius: 16,
-                mass: 6,
-                maxSpeed: 10,
-                maxForce: 10
-            });
-            vehicle.steering.toggleSeek(new Vector3(20, 0, 20));
-
-            //@DESC: add entities to the game.
-            EntityManager.registerEntity(vehicle, this.scene);
 
             this.gameLoop = this.gameLoop.bind(this);
         }
@@ -68,6 +55,19 @@ class Game{
     start(){
         console.log("initializing game...");
         this.scene.debugLayer.show();
+
+        //@DESC: create initial entities in the game.
+        const vehicle = new Vehicle({
+            scale: 16,
+            boundigRadius: 16,
+            mass: 6,
+            maxSpeed: 10,
+            maxForce: 10
+        });
+        vehicle.steering.toggleSeek(new Vector3(20, 0, 20));
+
+        //@DESC: add entities to the game.
+        EntityManager.registerEntity(vehicle, this.scene);
 
         //@DESC: start game looop.
         this.gameLoop();
