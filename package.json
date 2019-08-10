@@ -4,9 +4,10 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "pepjs": "^0.5.2",
+    "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2",
-    "webpack": "^4.35.2"
+    "webpack-dev-server": "^3.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
