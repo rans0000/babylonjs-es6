@@ -1,11 +1,12 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
-import MovingEntity from "../../../../Classes/GameEntity/MovingEntity";
-import SteeringBehaviours from "../../../../Classes/SteeringBehaviours/SteeringBehaviours";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Vector3 } from "@babylonjs/core/Maths/math";
+
+import MovingEntity from "../../../../Classes/GameEntity/MovingEntity";
+import EntityManager from "../../../../Classes/GameEntity/EntityManager";
+import SteeringBehaviours from "../../../../Classes/SteeringBehaviours/SteeringBehaviours";
 
 class Vehicle extends MovingEntity{
     constructor(config){
@@ -25,9 +26,13 @@ class Vehicle extends MovingEntity{
     }
 
     update(timeInterval){
+        
+        //@DESC: find position of seektarget object
+        const seekTarget = EntityManager.getEntityById(0);
+        const seekPosition = seekTarget.position.clone();
+        this.steering.toggleSeek(seekPosition);
 
         //@DESC: Calculate the combined force from each steering behaviour the vehicle's list.
-        
         const steeringForce = this.steering.calculate();
         //@DESC: Calculate acceleration (Acceleration = Force/Mass)
         const acceleration = steeringForce.scale(1 / this.mass);

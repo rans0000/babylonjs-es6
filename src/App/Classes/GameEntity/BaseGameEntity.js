@@ -9,6 +9,7 @@ class BaseGameEntity{
         this.scale = config.scale || 1;
         this.boundigRadius = config.boundigRadius;
         this.tagged = config.tagged || false;
+        this.scene = config.scene;
     }
 
     update(_timeInterval){

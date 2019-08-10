@@ -11,11 +11,13 @@ import { GridMaterial } from "@babylonjs/materials/grid";
 import "@babylonjs/core/Meshes/meshBuilder";
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
+import "pepjs";
 
 import EntityManager from "../../Classes/GameEntity/EntityManager";
 import MessageDispatcher from "../../Classes/Message/MessageDispatcher";
-import Vehicle from "./Data/Vehicle/Vehicle";
 import Utils from "../../Utils/Utils";
+import Vehicle from "./Data/Vehicle/Vehicle";
+import SeekTarget from "./Data/SeekTarget/SeekTarget";
 
 let instance = null;
 class Game{
@@ -43,7 +45,7 @@ class Game{
 
             //@DESC: create basic ground
             let material = new GridMaterial("grid", this.scene);
-            let ground = Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
+            let ground = Mesh.CreateGround("ground1", 40, 40, 2, this.scene);
             ground.material = material;
 
             this.gameLoop = this.gameLoop.bind(this);
@@ -57,17 +59,29 @@ class Game{
         this.scene.debugLayer.show();
 
         //@DESC: create initial entities in the game.
+        //@DESC: create seekingtarget
+        //create a common vector to pass as seektarget position
+        const seekVector = new Vector3(10, 2, 10);
+
+        const seekTarget = new SeekTarget({
+            position: seekVector.clone(),
+            boundigRadius: 1,
+            scene: this.scene
+        });
+
+        //@DESC: create vehicle
         const vehicle = new Vehicle({
             scale: 16,
             boundigRadius: 16,
             mass: 6,
             maxSpeed: 10,
-            maxForce: 10
+            maxForce: 10,
+            scene: this.scene
         });
-        vehicle.steering.toggleSeek(new Vector3(20, 0, 20));
-
+        
         //@DESC: add entities to the game.
         EntityManager.registerEntity(vehicle, this.scene);
+        EntityManager.registerEntity(seekTarget, this.scene);
 
         //@DESC: start game looop.
         this.gameLoop();
@@ -87,6 +101,7 @@ class Game{
         while(this.dt > this.slowStep){
             this.dt = this.dt - this.slowStep;
             MessageDispatcher.dispatchQueuedMessages();
+
             this.update(this.step);
             ++this.ticks;
         }
