@@ -6,8 +6,8 @@ import StateMachine from "../../../../Classes/FSM/StateMachine";
 import DrinkingBeer from "./DrinkingBeer";
 
 class Joe extends BaseGameEntity{
-    constructor(){
-        super();
+    constructor(config){
+        super(config);
         
         this.name = "Thug Joe";
         this.location = undefined;
@@ -16,6 +16,10 @@ class Joe extends BaseGameEntity{
         
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new DrinkingBeer());
+    }
+    
+    addToScene(){
+        //not applicable as there is nothing to render.
     }
     
     getName(){

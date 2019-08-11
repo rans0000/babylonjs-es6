@@ -32,14 +32,20 @@ class Game{
         console.log("initializing game...");
 
         //@DESC: create initial entities in the game.
-        const miner = new Miner();
-        const wife = new Wife();
-        const joe = new Joe();
+        const miner = new Miner({
+            boundigRadius: 1
+        });
+        const wife = new Wife({
+            boundigRadius: 1
+        });
+        const joe = new Joe({
+            boundigRadius: 1
+        });
 
         //@DESC: add entities to the game.
-        EntityManager.registerEntity(miner);
-        EntityManager.registerEntity(wife);
-        EntityManager.registerEntity(joe);
+        EntityManager.registerEntity(miner, this.scene);
+        EntityManager.registerEntity(wife, this.scene);
+        EntityManager.registerEntity(joe, this.scene);
 
         //@DESC: start game looop.
         this.gameLoop();

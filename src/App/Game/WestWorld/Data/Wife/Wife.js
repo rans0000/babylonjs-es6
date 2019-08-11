@@ -7,8 +7,8 @@ import DoHouseWork from "./DoHouseWork";
 import GlobalStates from "./GlobalStates";
 
 class Wife extends BaseGameEntity{
-    constructor(){
-        super();
+    constructor(config){
+        super(config);
         this.name = "Elsa";
         this.location = undefined;
         this.cooking = false;
@@ -16,6 +16,10 @@ class Wife extends BaseGameEntity{
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new DoHouseWork());
         this.stateMachine.setGlobalState(new GlobalStates());
+    }
+    
+    addToScene(){
+        //not applicable as there is nothing to render.
     }
     
     getName(){

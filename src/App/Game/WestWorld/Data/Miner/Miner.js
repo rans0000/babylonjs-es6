@@ -6,8 +6,8 @@ import StateMachine from "../../../../Classes/FSM/StateMachine";
 import EnterMineAndDigForNugget from "./EnterMineAndDigForNugget";
 
 class Miner extends BaseGameEntity{
-    constructor(){
-        super();
+    constructor(config){
+        super(config);
         this.name = "Miner Bob";
         this.location = undefined;
         this.goldCarried = 0;
@@ -19,6 +19,10 @@ class Miner extends BaseGameEntity{
         this.stateMachine = new StateMachine(this);
         this.stateMachine.setCurrentState(new EnterMineAndDigForNugget());
         //Miner has no global states.
+    }
+    
+    addToScene(){
+        //not applicable as there is nothing to render.
     }
     
     getName(){
