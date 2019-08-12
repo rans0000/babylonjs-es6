@@ -13,11 +13,13 @@ import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "pepjs";
 
+
 import EntityManager from "../../Classes/GameEntity/EntityManager";
 import MessageDispatcher from "../../Classes/Message/MessageDispatcher";
 import Utils from "../../Utils/Utils";
 import Vehicle from "./Data/Vehicle/Vehicle";
 import SeekTarget from "./Data/SeekTarget/SeekTarget";
+import FlockUI from "./GUI/FlockUI";
 
 let instance = null;
 class Game{
@@ -47,6 +49,9 @@ class Game{
             let material = new GridMaterial("grid", this.scene);
             let ground = Mesh.CreateGround("ground1", 40, 40, 2, this.scene);
             ground.material = material;
+            
+            //@DESC: create gui for switching flock types.
+            new FlockUI();
 
             this.gameLoop = this.gameLoop.bind(this);
         }
@@ -78,7 +83,7 @@ class Game{
             maxForce: 10,
             scene: this.scene
         });
-        
+
         //@DESC: add entities to the game.
         EntityManager.registerEntity(vehicle, this.scene);
         EntityManager.registerEntity(seekTarget, this.scene);
