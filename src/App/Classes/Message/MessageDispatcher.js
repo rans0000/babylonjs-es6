@@ -3,7 +3,7 @@
 
 import Telegram from "../Message/Telegram";
 import Utils from "../../Utils/Utils";
-import Game from "../../Game/WestWorld/Game";
+import Game from "../../Classes/Engine/Game";
 import EntityManager from "../GameEntity/EntityManager";
 
 let instance = null;

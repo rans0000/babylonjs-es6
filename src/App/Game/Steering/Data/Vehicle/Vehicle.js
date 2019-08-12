@@ -11,7 +11,7 @@ import SteeringBehaviours from "../../../../Classes/SteeringBehaviours/SteeringB
 class Vehicle extends MovingEntity{
     constructor(config){
         super(config);
-        this.position = this.position || new Vector3.Zero();
+        this.position = config.position || new Vector3.Zero();
         this.mesh = null;
         //@DESC: A pointer to the world data enabling Vehicle to access walls, obstacles and other agents etc.
         this.gameWorld = config.gameWorld;
@@ -28,7 +28,7 @@ class Vehicle extends MovingEntity{
     update(timeInterval){
         
         //@DESC: find position of seektarget object
-        const seekTarget = EntityManager.getEntityById(0);
+        const seekTarget = EntityManager.getEntityById(2);
         const seekPosition = seekTarget.position.clone();
         this.steering.toggleSeek(seekPosition);
 
@@ -58,6 +58,10 @@ class Vehicle extends MovingEntity{
         if(mesh){
             mesh.position = this.position.clone();
         }
+    }
+    
+    handleMessage(message){
+        console.log("Message recieved", message);
     }
 }
 

@@ -1,7 +1,7 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import Game from './Game';
+import Launcher from './Launcher';
 
-const game = new Game({fps: 60, slow: 0, canvasId: "canvasElement"});
+const game = new Launcher({fps: 60, slow: 0, canvasId: "canvasElement"});
 game.start();
