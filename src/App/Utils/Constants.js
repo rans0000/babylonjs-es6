@@ -19,7 +19,7 @@ const MSG_TYPE = {
     STEW_READY: "STEW_READY",
     FIGHTING: "FIGHTING",
     
-    FLOCK_MODE: "FLOCK_MODE",
+    SEEK_MODE: "SEEK_MODE",
     FLEE_MODE: "FLEE_MODE",
 };
 
