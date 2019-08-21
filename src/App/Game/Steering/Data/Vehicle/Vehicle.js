@@ -1,7 +1,7 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { CylinderBuilder } from "@babylonjs/core/Meshes/Builders/cylinderBuilder";
 import { Vector3 } from "@babylonjs/core/Maths/math";
 
 import MovingEntity from "../../../../Classes/GameEntity/MovingEntity";
@@ -20,9 +20,12 @@ class Vehicle extends MovingEntity{
     }
 
     addToScene(scene){
-        let sphere = Mesh.CreateSphere("sphere1", 16, 2, scene);
-        sphere.position.y = 2;
-        this.mesh = sphere;
+        let box = CylinderBuilder.CreateCylinder("cone1", {diameterTop: 0, diameterBottom: 2, tessellation: 4}, scene);
+        box.position.y = 2;
+        box.rotation.x = Math.PI/2;
+        box.rotation.z = Math.PI/2;
+        this.mesh = box;
+        this.mesh.convertToFlatShadedMesh();
     }
 
     update(timeInterval){
@@ -49,7 +52,7 @@ class Vehicle extends MovingEntity{
         //@DESC: Update the heading of Vehicle if velocity is greater than a small number
         if(this.velocity.lengthSquared() > 0.00000001){
             this.heading = (this.velocity.clone()).normalize();
-            this.side = new Vector3(this.heading);
+            this.side = this.heading.clone();
             this.side.z = this.side.z * -1;
         }
         
@@ -57,6 +60,7 @@ class Vehicle extends MovingEntity{
         const mesh = this.mesh;
         if(mesh){
             mesh.position = this.position.clone();
+            mesh.rotation.y = Math.atan2(this.heading.z, -this.heading.x);
         }
     }
     

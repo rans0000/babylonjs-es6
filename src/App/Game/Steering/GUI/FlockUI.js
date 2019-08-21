@@ -23,7 +23,7 @@ class FlockUI{
         let button = Button.CreateSimpleButton("seekButton", "Seek");
 
         button.id = tempEntity.id;
-        button.width = "150px";
+        button.width = "60px";
         button.height = "40px";
         button.top = "10px";
         button.left = "10px";
@@ -45,17 +45,18 @@ class FlockUI{
         const tempEntity = new BaseGameEntity({});
         let button = Button.CreateSimpleButton("fleeButton", "Flee");
         
-        button.width = "150px";
+        button.id = tempEntity.id;
+        button.width = "60px";
         button.height = "40px";
         button.top = "10px";
-        button.left = "170px";
+        button.left = "80px";
         button.color = "white";
         button.cornerRadius = 5;
         button.background = "green";
         button.onPointerUpObservable.add(function() {
             const seekButtonId = 1;
             const movingObjectId = 3;
-            MessageDispatcher.dispatchMessage(0, seekButtonId, movingObjectId, MSG_TYPE.SEEK_MODE);
+            MessageDispatcher.dispatchMessage(0, seekButtonId, movingObjectId, MSG_TYPE.FLEE_MODE);
         });
         button.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
         button.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;

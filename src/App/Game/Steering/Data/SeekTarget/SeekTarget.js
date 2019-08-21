@@ -43,6 +43,7 @@ class SeekTarget extends BaseGameEntity{
         let sphere = Mesh.CreateSphere("targetSphere1", 1, 1, this.scene);
         sphere.position.y = 2;
         this.mesh = sphere;
+        this.mesh.convertToFlatShadedMesh();
     }
 }
 
