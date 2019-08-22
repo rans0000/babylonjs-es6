@@ -7,6 +7,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math";
 import MovingEntity from "../../../../Classes/GameEntity/MovingEntity";
 import EntityManager from "../../../../Classes/GameEntity/EntityManager";
 import SteeringBehaviours from "../../../../Classes/SteeringBehaviours/SteeringBehaviours";
+import { MSG_TYPE } from "../../../../Utils/Constants";
 
 class Vehicle extends MovingEntity{
     constructor(config){
@@ -29,11 +30,6 @@ class Vehicle extends MovingEntity{
     }
 
     update(timeInterval){
-        
-        //@DESC: find position of seektarget object
-        const seekTarget = EntityManager.getEntityById(2);
-        const seekPosition = seekTarget.position.clone();
-        this.steering.toggleSeek(seekPosition);
 
         //@DESC: Calculate the combined force from each steering behaviour the vehicle's list.
         const steeringForce = this.steering.calculate();
@@ -55,7 +51,7 @@ class Vehicle extends MovingEntity{
             this.side = this.heading.clone();
             this.side.z = this.side.z * -1;
         }
-        
+
         //update the rendering mesh
         const mesh = this.mesh;
         if(mesh){
@@ -63,9 +59,40 @@ class Vehicle extends MovingEntity{
             mesh.rotation.y = Math.atan2(this.heading.z, -this.heading.x);
         }
     }
-    
+
     handleMessage(message){
-        console.log("Message recieved", message);
+        
+        switch(message.messageType) {
+            case MSG_TYPE.SEEK_MODE:
+                //@DESC: find position of seektarget object
+                const seekTarget = EntityManager.getEntityById(2);
+                const seekPosition = seekTarget.position.clone();
+                this.steering.toggleFlee(false);
+                this.steering.toggleSeek(seekPosition);
+                break;
+            case MSG_TYPE.FLEE_MODE:
+                //@DESC: find position of fleetarget object
+                const fleeTarget = EntityManager.getEntityById(2);
+                const fleePosition = fleeTarget.position.clone();
+                this.steering.toggleSeek(false);
+                this.steering.toggleFlee(fleePosition);
+                break;
+            case MSG_TYPE.TARGET_MOVED:
+                //@DESC: find position of target object
+                const target = EntityManager.getEntityById(2);
+                const targetPosition = target.position.clone();
+                if(this.steering.isSeeking){
+                    this.steering.toggleSeek(targetPosition);
+                    this.steering.toggleFlee(false);
+                }
+                else if(this.steering.isFleeing){
+                    this.steering.toggleSeek(false);
+                    this.steering.toggleFlee(targetPosition);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 

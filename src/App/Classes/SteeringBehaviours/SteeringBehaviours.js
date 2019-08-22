@@ -8,12 +8,17 @@ class SteeringBehaviours{
         this.entity = entity;
         this.isSeeking = false;
         this.seekTargetPosition = null;
+        this.isFleeing = false;
+        this.fleeTargetPosition = null;
     }
 
     calculate(){
         let totalForce = new Vector3.Zero();
         const seekForce = this.seek();
-        totalForce = totalForce.add(seekForce);
+        const fleeForce = this.flee();
+        
+        totalForce.addInPlace(seekForce);
+        totalForce.addInPlace(fleeForce);
 
         return totalForce;
     }
@@ -46,8 +51,44 @@ class SteeringBehaviours{
 
             //@DESC: Calculate steering force.
             //@DESC: Steering force = Desired Velocity - Current Velocity.
-            //@DESC: Limit the steering force to the maximum force.
             steeringVelocity = desiredVelocity.subtract(entity.velocity);
+            //@DESC: Limit the steering force to the maximum force.
+        }
+
+        return steeringVelocity;
+    }
+
+    toggleFlee(fleeTargetPosition){
+        //@DESC: toggle flee if valid seektarget is passed.
+        if(fleeTargetPosition){
+            this.isFleeing = true;
+            this.fleeTargetPosition = fleeTargetPosition;
+        }
+        else{
+            this.isFleeing = false;
+            this.fleeTargetPosition = null;
+        }
+    }
+
+    flee(){
+        const entity = this.entity;
+        const fleeTargetPosition = this.fleeTargetPosition;
+        let steeringVelocity = new Vector3.Zero();
+        const panicDistance = 5 * 5; //panic distance is 4. hardcoded for now.
+
+        if(this.isFleeing && entity.position.subtract(fleeTargetPosition).lengthSquared() < panicDistance){
+            //@DESC: Calculate desired velocity if target position is less than panic distance.
+            //@DESC: Desired Velocity = Position(agent) - Position(target).
+            //@DESC: Normalize DesiredVelocity.
+            //@DESC: Scale desired velocity to maximum speed.
+            let desiredVelocity = entity.position.subtract(fleeTargetPosition);
+            desiredVelocity.normalize();
+            desiredVelocity = desiredVelocity.scale(entity.maxSpeed);
+
+            //@DESC: Calculate steering force.
+            //@DESC: Steering force = Desired Velocity - Current Velocity.
+            steeringVelocity = desiredVelocity.subtract(entity.velocity);
+            //@DESC: Limit the steering force to the maximum force.
         }
 
         return steeringVelocity;

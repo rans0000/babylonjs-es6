@@ -6,6 +6,8 @@ import { Vector3 } from "@babylonjs/core/Maths/math";
 import { PointerEventTypes } from "@babylonjs/core/Events/pointerEvents";
 
 import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
+import MessageDispatcher from "../../../../Classes/Message/MessageDispatcher";
+import { MSG_TYPE } from "../../../../Utils/Constants";
 
 class SeekTarget extends BaseGameEntity{
     constructor(config){
@@ -26,6 +28,9 @@ class SeekTarget extends BaseGameEntity{
                     let posVector = pointerInfo.pickInfo.pickedPoint.clone();
                     posVector.y = 2;
                     this.position = posVector;
+                    const seekTargetId = 2;
+                    const movingObjectId = 3;
+                    MessageDispatcher.dispatchMessage(0, seekTargetId, movingObjectId, MSG_TYPE.TARGET_MOVED, posVector.clone());
                 }
                 break;
             default:
