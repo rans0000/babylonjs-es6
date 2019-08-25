@@ -41,7 +41,7 @@ class Vehicle extends MovingEntity{
         //@DESC: Make sure the vehicle doesnot exceed the maximum speed.
         const length = this.velocity.length();
         let tempVelocity = this.velocity.clone();
-        this.velocity = length < this.maxSpeed ? this.velocity : tempVelocity.normalizeFromLength();
+        this.velocity = length < this.maxSpeed ? this.velocity : tempVelocity.normalizeFromLength(this.maxSpeed);
         //@DESC: Update the position Position += Velocity * timeInterval.
         const updatedVelocity = this.velocity.scale(timeInterval);
         this.position = this.position.add(updatedVelocity);
@@ -61,34 +61,49 @@ class Vehicle extends MovingEntity{
     }
 
     handleMessage(message){
-        
+
         switch(message.messageType) {
             case MSG_TYPE.SEEK_MODE:
                 //@DESC: find position of seektarget object
-                const seekTarget = EntityManager.getEntityById(2);
+                const seekTarget = EntityManager.getEntityById(3);
                 const seekPosition = seekTarget.position.clone();
-                this.steering.toggleFlee(false);
                 this.steering.toggleSeek(seekPosition);
+                this.steering.toggleFlee(false);
                 break;
             case MSG_TYPE.FLEE_MODE:
                 //@DESC: find position of fleetarget object
-                const fleeTarget = EntityManager.getEntityById(2);
+                const fleeTarget = EntityManager.getEntityById(3);
                 const fleePosition = fleeTarget.position.clone();
                 this.steering.toggleSeek(false);
                 this.steering.toggleFlee(fleePosition);
+                this.steering.toggleArrive(false);
                 break;
             case MSG_TYPE.TARGET_MOVED:
                 //@DESC: find position of target object
-                const target = EntityManager.getEntityById(2);
+                const target = EntityManager.getEntityById(3);
                 const targetPosition = target.position.clone();
                 if(this.steering.isSeeking){
                     this.steering.toggleSeek(targetPosition);
                     this.steering.toggleFlee(false);
+                    this.steering.toggleArrive(false);
                 }
                 else if(this.steering.isFleeing){
                     this.steering.toggleSeek(false);
                     this.steering.toggleFlee(targetPosition);
+                    this.steering.toggleArrive(false);
                 }
+                else if(this.steering.isArriving){
+                    this.steering.toggleSeek(false);
+                    this.steering.toggleFlee(false);
+                    this.steering.toggleArrive(targetPosition);
+                }
+                break;
+            case MSG_TYPE.ARRIVE_MODE:
+                //@DESC: find position of target object
+                const arriveTarget = EntityManager.getEntityById(3);
+                const arriveTargetPosition = arriveTarget.position.clone();
+                this.steering.toggleFlee(false);
+                this.steering.toggleArrive(arriveTargetPosition);
                 break;
             default:
                 break;

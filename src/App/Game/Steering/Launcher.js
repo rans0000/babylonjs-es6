@@ -57,7 +57,7 @@ class Launcher{
         //@DESC: create initial entities in the game.
         //@DESC: create seekingtarget
         //create a common vector to pass as seektarget position
-        const seekVector = new Vector3(10, 2, 10);
+        const seekVector = new Vector3(20, 2, 0);
 
         const seekTarget = new SeekTarget({
             position: seekVector.clone(),
@@ -68,11 +68,12 @@ class Launcher{
         //@DESC: create vehicle
         const vehicle = new Vehicle({
             position: new Vector3(0, 2, 0),
+            stoppingDistance: 10,
             scale: 16,
             boundigRadius: 16,
             mass: 6,
             maxSpeed: 10,
-            maxForce: 10,
+            maxForce: 60,
             scene: scene
         });
 

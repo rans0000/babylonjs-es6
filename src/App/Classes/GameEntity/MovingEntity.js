@@ -9,6 +9,7 @@ class MovingEntity extends BaseGameEntity{
         super(config);
         const zero = new Vector3.Zero();
         this.velocity = config.velocity || zero;
+        this.stoppingDistance = config.stoppingDistance || 10;
         //@DESC: A normalized vector pointing to the direction the entity is facing.
         this.heading = config.heading || new Vector3(1, 0, 0);
         //@DESC: A vector perpendicular to the heading vector.

@@ -22,6 +22,7 @@ const MSG_TYPE = {
     TARGET_MOVED: "TARGET_MOVED",
     SEEK_MODE: "SEEK_MODE",
     FLEE_MODE: "FLEE_MODE",
+    ARRIVE_MODE: "ARRIVE_MODE"
 };
 
 Object.freeze(MSG_TYPE);

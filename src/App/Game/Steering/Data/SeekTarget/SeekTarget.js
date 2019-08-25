@@ -28,8 +28,8 @@ class SeekTarget extends BaseGameEntity{
                     let posVector = pointerInfo.pickInfo.pickedPoint.clone();
                     posVector.y = 2;
                     this.position = posVector;
-                    const seekTargetId = 2;
-                    const movingObjectId = 3;
+                    const seekTargetId = 3;
+                    const movingObjectId = 4;
                     MessageDispatcher.dispatchMessage(0, seekTargetId, movingObjectId, MSG_TYPE.TARGET_MOVED, posVector.clone());
                 }
                 break;
