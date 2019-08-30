@@ -31,6 +31,9 @@ class Launcher{
 
             let camera = new ArcRotateCamera("camera1", 1.5, 1.7, 11, new Vector3.Zero(), scene);
             camera.setPosition(new Vector3(0, 4, 10));
+            camera.inputs.clear();
+            camera.inputs.addMouseWheel();
+            camera.inputs.addPointers();
             camera.attachControl(this.game.canvas, true);
             let light = new HemisphericLight("light1", new Vector3(0, 1, 0), scene);
             light.intensity = 0.7;

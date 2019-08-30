@@ -4,6 +4,7 @@
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Vector3 } from "@babylonjs/core/Maths/math";
 import { PointerEventTypes } from "@babylonjs/core/Events/pointerEvents";
+import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
 
 import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
 import MessageDispatcher from "../../../../Classes/Message/MessageDispatcher";
@@ -18,6 +19,7 @@ class SeekTarget extends BaseGameEntity{
         this.gameWorld = config.gameWorld;
         this.scene = config.scene;
         this.scene.onPointerObservable.add(this.pointerHandler.bind(this));
+        this.scene.onKeyboardObservable.add(this.keyboardObservable.bind(this));
     }
 
     pointerHandler(pointerInfo){
@@ -31,6 +33,20 @@ class SeekTarget extends BaseGameEntity{
                     const seekTargetId = 3;
                     const movingObjectId = 4;
                     MessageDispatcher.dispatchMessage(0, seekTargetId, movingObjectId, MSG_TYPE.TARGET_MOVED, posVector.clone());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    keyboardObservable(keyboardInfo){
+        const key = keyboardInfo.event.key.toUpperCase();
+
+        switch(keyboardInfo.type){
+            case KeyboardEventTypes.KEYDOWN:
+                if(key === "W"){
+                    console.log(key);
                 }
                 break;
             default:
