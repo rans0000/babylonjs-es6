@@ -36,7 +36,7 @@ class Vehicle extends MovingEntity{
         //@DESC: Calculate acceleration (Acceleration = Force/Mass)
         const acceleration = steeringForce.scale(1 / this.mass);
         //@DESC: update velocity Velocity += Accelaration * Time;
-        const velocity = acceleration.scale(timeInterval);
+        const velocity = acceleration.scale(1);
         this.velocity.addInPlace(velocity);
         //@DESC: Make sure the vehicle doesnot exceed the maximum speed.
         const length = this.velocity.length();
