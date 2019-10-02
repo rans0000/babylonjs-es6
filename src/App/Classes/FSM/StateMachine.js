@@ -33,7 +33,7 @@ class StateMachine{
 
     changeState(_newState){
         if(!_newState){
-            throw {error_mssg: "Trying to change to a null state."};
+            throw {error_mssg: "Error: Trying to change to a null state."};
         }
 
         //@DESC: keep track of previous state.

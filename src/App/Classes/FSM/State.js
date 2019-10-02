@@ -4,15 +4,15 @@
 class State{
 
     enter(){
-        throw({error_mssg: "enter method is virtual. Impliment class specific  definition."});
+        throw "Error: 'enter' method is virtual. Impliment class specific  definition.";
     }
 
     execute(){
-        throw({error_mssg: "execute method is virtual. Impliment class specific  definition."});
+        throw "Error: 'execute' method is virtual. Impliment class specific  definition.";
     }
 
     exit(){
-        throw({error_mssg: "exit method is virtual. Impliment class specific  definition."});
+        throw "Error: 'exit' method is virtual. Impliment class specific  definition.";
     }
     
     onMessage(entity, message){
