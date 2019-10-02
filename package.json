@@ -12,6 +12,7 @@
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babylonjs/core": "^4.0.3",
     "@babylonjs/gui": "^4.0.3",
