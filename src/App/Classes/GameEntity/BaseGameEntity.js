@@ -1,7 +1,6 @@
 /*jshint browser: true*/
 /*jshint esnext: true*/
 
-import { Vector3 } from "@babylonjs/core/Maths/math";
 import { ENTITY_TYPE } from "../../Utils/Constants";
 
 class BaseGameEntity {
