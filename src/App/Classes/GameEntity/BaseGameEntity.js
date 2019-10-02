@@ -2,18 +2,21 @@
 /*jshint esnext: true*/
 
 import { Vector3 } from "@babylonjs/core/Maths/math";
+import { ENTITY_TYPE } from "../../Utils/Constants";
 
 class BaseGameEntity {
     constructor(config) {
         if (!config.name) {
             throw "Error: Unable to find mandatory field 'name' in created game entity.";
         }
-        this.id = BaseGameEntity.nextId++;
+        this.id = `${BaseGameEntity.nextId}`;
         this.name = `${config.name}`;
+        this.type = config.type || ENTITY_TYPE.GEOMETRY;
         this.scale = config.scale || 1;
         this.boundigRadius = config.boundigRadius;
         this.tagged = config.tagged || false;
         this.scene = config.scene;
+        BaseGameEntity.nextId++;
     }
 
     update(_timeInterval) {

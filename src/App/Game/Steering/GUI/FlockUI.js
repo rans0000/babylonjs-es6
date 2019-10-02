@@ -12,11 +12,11 @@ import { MSG_TYPE } from "../../../Utils/Constants";
 
 class FlockUI{
     constructor(){
-        this.index = 2;
-        let advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        this.createSeekButton(advancedTexture);
-        this.createFleeButton(advancedTexture);
-        this.createBasicButton({name: "ArriveButton", text: "Arrive", msgType: MSG_TYPE.ARRIVE_MODE}, advancedTexture);
+        //this.index = 2;
+        //let advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        //this.createSeekButton(advancedTexture);
+        //this.createFleeButton(advancedTexture);
+        //this.createBasicButton({name: "ArriveButton", text: "Arrive", msgType: MSG_TYPE.ARRIVE_MODE}, advancedTexture);
     }
     
     createBasicButton(config, advancedTexture){

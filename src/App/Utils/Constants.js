@@ -28,4 +28,12 @@ const MSG_TYPE = {
 Object.freeze(MSG_TYPE);
 //-----------------------------------------------
 
-export {LOCATION, MSG_TYPE};
+const ENTITY_TYPE = {
+    GEOMETRY: "GEOMETRY",
+    BUTTON: "BUTTON",
+};
+
+Object.freeze(ENTITY_TYPE);
+//-----------------------------------------------
+
+export {LOCATION, MSG_TYPE, ENTITY_TYPE};

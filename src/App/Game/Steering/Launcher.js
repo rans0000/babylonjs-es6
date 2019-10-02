@@ -63,6 +63,7 @@ class Launcher{
         const seekVector = new Vector3(20, 2, 0);
 
         const seekTarget = new SeekTarget({
+            name: "seekTarget",
             position: seekVector.clone(),
             boundigRadius: 1,
             scene: scene
@@ -70,6 +71,7 @@ class Launcher{
 
         //@DESC: create vehicle
         const vehicle = new Vehicle({
+            name: "vehicle",
             position: new Vector3(0, 2, 0),
             stoppingDistance: 10,
             scale: 16,

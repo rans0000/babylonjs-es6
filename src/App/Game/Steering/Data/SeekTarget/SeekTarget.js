@@ -8,6 +8,7 @@ import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
 
 import BaseGameEntity from "../../../../Classes/GameEntity/BaseGameEntity";
 import MessageDispatcher from "../../../../Classes/Message/MessageDispatcher";
+import EntityManager from "../../../../Classes/GameEntity/EntityManager";
 import { MSG_TYPE } from "../../../../Utils/Constants";
 
 class SeekTarget extends BaseGameEntity{
@@ -30,8 +31,8 @@ class SeekTarget extends BaseGameEntity{
                     let posVector = pointerInfo.pickInfo.pickedPoint.clone();
                     posVector.y = 2;
                     this.position = posVector;
-                    const seekTargetId = 3;
-                    const movingObjectId = 4;
+                    const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
+                    const movingObjectId = EntityManager.getEntityByName("vehicle").id;
                     MessageDispatcher.dispatchMessage(0, seekTargetId, movingObjectId, MSG_TYPE.TARGET_MOVED, posVector.clone());
                 }
                 break;
