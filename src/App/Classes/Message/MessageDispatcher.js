@@ -8,9 +8,9 @@ import EntityManager from "../GameEntity/EntityManager";
 
 let instance = null;
 
-class MessageDispatcher{
-    constructor(){
-        if(!instance){
+class MessageDispatcher {
+    constructor() {
+        if (!instance) {
             instance = this;
             this._type = "MessageDispatcher";
 
@@ -22,7 +22,7 @@ class MessageDispatcher{
         return instance;
     }
 
-    dispatchMessage(delay=0, sender, reciever, messageType, extraInfo){
+    dispatchMessage(delay = 0, sender, reciever, messageType, extraInfo) {
         //@DESC: Send message to itself/another agent.
 
         //@DESC: calculate the dispathch time based on current game time.
@@ -31,7 +31,7 @@ class MessageDispatcher{
         const dispatchTime = gameInstance.ticks + delay;
 
         //@DESC: Create the telegram
-        const telegram = new Telegram({sender, reciever, dispatchTime, messageType, extraInfo});
+        const telegram = new Telegram({ sender, reciever, dispatchTime, messageType, extraInfo });
 
         //@DESC: Insert the msg into the sorted queue.
         //@TODO: merging similar msgs within short intervals need to be combined into a single msg
@@ -39,7 +39,7 @@ class MessageDispatcher{
         Utils.inserIntoSortedObjectArray(telegram, this.priorityQ, "dispatchTime");
     }
 
-    dispatchQueuedMessages(){
+    dispatchQueuedMessages() {
         //@DESC: this method runs every update cycle and checks any message has expired timestamps.
         //if yes, then they are dispatched to the recipient along the message.
         //once done, the message is removed from the queue.
@@ -47,30 +47,33 @@ class MessageDispatcher{
         const gameInstance = new Game();
         const currentTime = gameInstance.ticks;
         let removedMessages = [];
-        for(let i = 0; i < this.priorityQ.length; ++i){
-            if(this.priorityQ[i].dispatchTime <= currentTime){
+        for (let i = 0; i < this.priorityQ.length; ++i) {
+            if (this.priorityQ[i].dispatchTime <= currentTime) {
                 removedMessages.push(this.priorityQ[i]);
             }
-            else{
+            else {
                 break;
             }
         }
-        if(removedMessages.length){
+        if (removedMessages.length) {
             this.priorityQ.splice(0, removedMessages.length);
             removedMessages.forEach(message => {
-                const reciver = message.getReciever();
-                this.discharge(reciver, {...message});
+                let reciver = message.getReciever();
+                reciver = [].concat(reciver);
+                reciver.forEach(target => {
+                    this.discharge(target, {...message});
+                });
             });
         }
         removedMessages = [];
     }
 
-    discharge(reciverId, message){
+    discharge(reciverId, message) {
         const reciver = EntityManager.getEntityById(reciverId);
         reciver.handleMessage(message);
     }
 
-    insertIntoPriorityQ(message){
+    insertIntoPriorityQ(message) {
         //@DESC: insert message into the queue after sorting in ascending order of delay time.
         const time = message.getDispatchTime();
     }
