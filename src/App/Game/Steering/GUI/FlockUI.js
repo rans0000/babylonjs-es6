@@ -12,6 +12,8 @@ class FlockUI {
     }
 
     createUIButons() {
+
+        //@DESC: Create seek button
         const seekButton = GUI.createButton({
             name: "btnSeek",
             text: "Seek",
@@ -23,6 +25,7 @@ class FlockUI {
             }
         });
 
+        //@DESC: Create flee button
         const fleeButton = GUI.createButton({
             name: "btnFlee",
             text: "Flee",
@@ -34,6 +37,7 @@ class FlockUI {
             }
         });
 
+        //@DESC: Create arrive button
         const arriveButton = GUI.createButton({
             name: "btnArrive",
             text: "Arrive",
@@ -42,6 +46,18 @@ class FlockUI {
                 const seekButtonId = this.id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
                 MessageDispatcher.dispatchMessage(0, seekButtonId, vehicleId, MSG_TYPE.ARRIVE_MODE);
+            }
+        });
+
+        //@DESC: Create pursue button
+        const pursuitButton = GUI.createButton({
+            name: "btnPursuit",
+            text: "Pursuit",
+            left: "220px",
+            onClick: function () {
+                const seekButtonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
+                MessageDispatcher.dispatchMessage(0, seekButtonId, seekTargetId, MSG_TYPE.PURSUIT_MODE);
             }
         });
 

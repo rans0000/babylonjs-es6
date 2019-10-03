@@ -64,6 +64,8 @@ class Launcher{
 
         const seekTarget = new SeekTarget({
             name: "seekTarget",
+            mass: 6,
+            maxSpeed: 10,
             position: seekVector.clone(),
             boundigRadius: 1,
             scene: scene
