@@ -20,8 +20,9 @@ class FlockUI {
             left: "10px",
             onClick: function () {
                 const seekButtonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, vehicleId, MSG_TYPE.SEEK_MODE);
+                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.SEEK_MODE);
             }
         });
 
@@ -32,8 +33,9 @@ class FlockUI {
             left: "80px",
             onClick: function () {
                 const seekButtonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, vehicleId, MSG_TYPE.FLEE_MODE);
+                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.FLEE_MODE);
             }
         });
 
@@ -44,11 +46,12 @@ class FlockUI {
             left: "150px",
             onClick: function () {
                 const seekButtonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, vehicleId, MSG_TYPE.ARRIVE_MODE);
+                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.ARRIVE_MODE);
             }
         });
-
+        
         //@DESC: Create pursue button
         const pursuitButton = GUI.createButton({
             name: "btnPursuit",
@@ -57,7 +60,8 @@ class FlockUI {
             onClick: function () {
                 const seekButtonId = this.id;
                 const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, seekTargetId, MSG_TYPE.PURSUIT_MODE);
+                const vehicleId = EntityManager.getEntityByName("vehicle").id;
+                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.PURSUIT_MODE);
             }
         });
 

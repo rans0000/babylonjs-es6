@@ -70,14 +70,16 @@ class SeekTarget extends BaseGameEntity {
     }
 
     handleMessage(message) {
-        switch (message.messageType) {
-            case MSG_TYPE.PURSUIT_MODE:
-                this.moveMode = this.moveMode === ENTITY_MODES.SEEKER_JUMP_MODE ? ENTITY_MODES.SEEKER_RUN_MODE : ENTITY_MODES.SEEKER_JUMP_MODE;
-                this.velocity = new Vector3.Zero();
-                this.controlledMovement.idle();
-                break;
-            default:
-                break;
+        const messageType = message.messageType;
+        if (messageType === MSG_TYPE.PURSUIT_MODE) {
+            this.moveMode = this.moveMode === ENTITY_MODES.SEEKER_JUMP_MODE ? ENTITY_MODES.SEEKER_RUN_MODE : ENTITY_MODES.SEEKER_JUMP_MODE;
+            this.velocity = new Vector3.Zero();
+            this.controlledMovement.idle();
+        }
+        else{
+            this.moveMode = ENTITY_MODES.SEEKER_JUMP_MODE;
+            this.velocity = new Vector3.Zero();
+            this.controlledMovement.idle();
         }
     }
 
