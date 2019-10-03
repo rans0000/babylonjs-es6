@@ -19,10 +19,10 @@ class FlockUI {
             text: "Seek",
             left: "10px",
             onClick: function () {
-                const seekButtonId = this.id;
+                const buttonId = this.id;
                 const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.SEEK_MODE);
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.SEEK_MODE);
             }
         });
 
@@ -32,10 +32,10 @@ class FlockUI {
             text: "Flee",
             left: "80px",
             onClick: function () {
-                const seekButtonId = this.id;
+                const buttonId = this.id;
                 const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.FLEE_MODE);
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.FLEE_MODE);
             }
         });
 
@@ -45,10 +45,10 @@ class FlockUI {
             text: "Arrive",
             left: "150px",
             onClick: function () {
-                const seekButtonId = this.id;
+                const buttonId = this.id;
                 const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.ARRIVE_MODE);
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.ARRIVE_MODE);
             }
         });
         
@@ -58,10 +58,23 @@ class FlockUI {
             text: "Pursuit",
             left: "220px",
             onClick: function () {
-                const seekButtonId = this.id;
+                const buttonId = this.id;
                 const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
                 const vehicleId = EntityManager.getEntityByName("vehicle").id;
-                MessageDispatcher.dispatchMessage(0, seekButtonId, [seekTargetId, vehicleId], MSG_TYPE.PURSUIT_MODE);
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.PURSUIT_MODE);
+            }
+        });
+        
+        //@DESC: Create pursue button
+        const evadeButton = GUI.createButton({
+            name: "btnEvade",
+            text: "Evade",
+            left: "290px",
+            onClick: function () {
+                const buttonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
+                const vehicleId = EntityManager.getEntityByName("vehicle").id;
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.EVADE_MODE);
             }
         });
 

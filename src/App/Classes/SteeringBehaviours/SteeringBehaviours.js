@@ -14,6 +14,8 @@ class SteeringBehaviours {
         this.arriveTarge = null;
         this.isPursuing = false;
         this.pursuitTarget = null;
+        this.isEvading = false;
+        this.evadeTarget = null;
     }
 
     calculate() {
@@ -22,11 +24,13 @@ class SteeringBehaviours {
         const fleeForce = this.flee();
         const arriveForce = this.arrive();
         const pursuitForce = this.pursuit();
+        const evadeForce = this.evade();
 
         totalForce.addInPlace(seekForce);
         totalForce.addInPlace(fleeForce);
         totalForce.addInPlace(arriveForce);
         totalForce.addInPlace(pursuitForce);
+        totalForce.addInPlace(evadeForce);
 
         return totalForce;
     }
@@ -78,13 +82,13 @@ class SteeringBehaviours {
         }
     }
 
-    flee() {
+    flee(fleePosition) {
         const entity = this.entity;
         let steeringVelocity = new Vector3.Zero();
         const panicDistance = 5 * 5; //panic distance is 4. hardcoded for now.
 
-        if (this.isFleeing) {
-            const fleeTargetPosition = this.fleeTarget.position.clone();
+        if (this.isFleeing || fleePosition) {
+            const fleeTargetPosition = fleePosition || this.fleeTarget.position.clone();
             if (entity.position.subtract(fleeTargetPosition).lengthSquared() < panicDistance) {
                 //@DESC: Calculate desired velocity if target position is less than panic distance.
                 //@DESC: Desired Velocity = Position(agent) - Position(target).
@@ -116,11 +120,11 @@ class SteeringBehaviours {
         }
     }
 
-    arrive() {
+    arrive(arrivePosition) {
         const entity = this.entity;
         let steeringVelocity = new Vector3.Zero();
-        if (this.isArriving) {
-            const arriveTragetPosition = this.arriveTarget.position.clone();
+        if (this.isArriving || arrivePosition) {
+            const arriveTragetPosition = arrivePosition || this.arriveTarget.position.clone();
             const toTarget = arriveTragetPosition.subtract(entity.position);
             const distanceToTarget = toTarget.length();
             //@TODO: deceleration should be enumerated to fast, normal and slow.
@@ -181,6 +185,37 @@ class SteeringBehaviours {
             }
         }
 
+
+        return steeringVelocity;
+    }
+
+    toggleEvade(evadeTarget) {
+        //@DESC: Toggle evade if valid target is passed.
+        if (evadeTarget) {
+            this.isEvading = true;
+            this.evadeTarget = evadeTarget;
+        }
+        else {
+            this.isEvading = false;
+            this.evadeTarget = null;
+        }
+    }
+
+    evade(evadePosition) {
+        const entity = this.entity;
+        let steeringVelocity = new Vector3.Zero();
+
+        if (this.isEvading) {
+            const toTarget = this.evadeTarget.position.subtract(entity.position);
+
+            //@DESC: The look ahed time is proportional to the distance between the target and evader
+            //and is inversely proportional to the sum of the agent's velocities.
+            const lookAheadTime = toTarget.length() / (entity.maxSpeed + this.evadeTarget.velocity.length());
+
+            //@DESC: flee from the predicted position of the target
+            const targetPosition = this.evadeTarget.velocity.scale(lookAheadTime).add(this.evadeTarget.position);
+            steeringVelocity = entity.steering.flee(targetPosition);
+        }
 
         return steeringVelocity;
     }

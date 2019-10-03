@@ -67,51 +67,66 @@ class Vehicle extends MovingEntity {
             case MSG_TYPE.SEEK_MODE:
                 const seekTarget = EntityManager.getEntityByName("seekTarget");
                 this.steering.toggleSeek(seekTarget);
-                this.steering.toggleFlee(false);
-                this.steering.toggleArrive(false);
-                this.steering.togglePursuit(false);
+                this.steering.toggleFlee(null);
+                this.steering.toggleArrive(null);
+                this.steering.togglePursuit(null);
+                this.steering.toggleEvade(null);
                 break;
             case MSG_TYPE.FLEE_MODE:
                 const fleeTarget = EntityManager.getEntityByName("seekTarget");
-                this.steering.toggleSeek(false);
+                this.steering.toggleSeek(null);
                 this.steering.toggleFlee(fleeTarget);
-                this.steering.toggleArrive(false);
-                this.steering.togglePursuit(false);
+                this.steering.toggleArrive(null);
+                this.steering.togglePursuit(null);
+                this.steering.toggleEvade(null);
                 break;
             case MSG_TYPE.TARGET_MOVED:
                 const target = EntityManager.getEntityByName("seekTarget");
                 if (this.steering.isSeeking) {
                     this.steering.toggleSeek(target);
-                    this.steering.toggleFlee(false);
-                    this.steering.toggleArrive(false);
-                    this.steering.togglePursuit(false);
+                    this.steering.toggleFlee(null);
+                    this.steering.toggleArrive(null);
+                    this.steering.togglePursuit(null);
+                    this.steering.toggleEvade(null);
                 }
                 else if (this.steering.isFleeing) {
-                    this.steering.toggleSeek(false);
+                    this.steering.toggleSeek(null);
                     this.steering.toggleFlee(target);
-                    this.steering.toggleArrive(false);
-                    this.steering.togglePursuit(false);
+                    this.steering.toggleArrive(null);
+                    this.steering.togglePursuit(null);
+                    this.steering.toggleEvade(null);
                 }
                 else if (this.steering.isArriving) {
-                    this.steering.toggleSeek(false);
-                    this.steering.toggleFlee(false);
+                    this.steering.toggleSeek(null);
+                    this.steering.toggleFlee(null);
                     this.steering.toggleArrive(target);
-                    this.steering.togglePursuit(false);
+                    this.steering.togglePursuit(null);
+                    this.steering.toggleEvade(null);
                 }
                 break;
             case MSG_TYPE.ARRIVE_MODE:
                 const arriveTarget = EntityManager.getEntityByName("seekTarget");
-                this.steering.toggleSeek(false);
-                this.steering.toggleFlee(false);
+                this.steering.toggleSeek(null);
+                this.steering.toggleFlee(null);
                 this.steering.toggleArrive(arriveTarget);
-                this.steering.togglePursuit(false);
+                this.steering.togglePursuit(null);
+                this.steering.toggleEvade(null);
                 break;
             case MSG_TYPE.PURSUIT_MODE:
                 const pursuitTarget = EntityManager.getEntityByName("seekTarget");
-                this.steering.toggleSeek(false);
-                this.steering.toggleFlee(false);
-                this.steering.toggleArrive(false);
+                this.steering.toggleSeek(null);
+                this.steering.toggleFlee(null);
+                this.steering.toggleArrive(null);
                 this.steering.togglePursuit(pursuitTarget);
+                this.steering.toggleEvade(null);
+                break;
+            case MSG_TYPE.EVADE_MODE:
+                const evadeTarget = EntityManager.getEntityByName("seekTarget");
+                this.steering.toggleSeek(null);
+                this.steering.toggleFlee(null);
+                this.steering.toggleArrive(null);
+                this.steering.togglePursuit(null);
+                this.steering.toggleEvade(evadeTarget);
                 break;
             default:
                 break;
