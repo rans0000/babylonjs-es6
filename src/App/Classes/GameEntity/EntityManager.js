@@ -29,7 +29,7 @@ class EntityManager {
         //@DESC: Registers an entity to the game.
 
         if (this.entityMap.hasOwnProperty(_entity.name)) {
-            throw { error_mssg: `Error: An entity with name: '${_entity.name}' already exists.` };
+            throw `Error: An entity with name: '${_entity.name}' already exists.`;
         }
 
         this.entityMap[_entity.name] = {
@@ -54,7 +54,7 @@ class EntityManager {
     removeEntityById(_id) {
         let entity = this.entityMap[_id];
         if (!entity) {
-            throw { error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such id exists.` };
+            throw `Error: Entity removal failed for id:${_id}.\nNo such id exists.`;
         }
         if (entity.inWorld) {
             const index = this.gameEntityList.findIndex(entity => entity.id === _id);
@@ -63,7 +63,7 @@ class EntityManager {
                 //@TODO: Remove entity's 3dmesh from the scene
             }
             else {
-                throw { error_mssg: `Error: Entity removal failed for id:${_id}.\nNo such entity found in gameEntityList.` };
+                throw `Error: Entity removal failed for id:${_id}.\nNo such entity found in gameEntityList.`;
             }
         }
 
@@ -75,7 +75,7 @@ class EntityManager {
     removeEntityByName(_name) {
         let entity = this.entityMap[_name];
         if (!entity) {
-            throw { error_mssg: `Error: Entity removal failed for name:${_name}.\nNo such name exists.` };
+            throw `Error: Entity removal failed for name:${_name}.\nNo such name exists.`;
         }
         if (entity.inWorld) {
             const index = this.gameEntityList.findIndex(entity => entity.name === _name);
@@ -84,7 +84,7 @@ class EntityManager {
                 //@TODO: Remove entity's 3dmesh from the scene
             }
             else {
-                throw { error_mssg: `Error: Entity removal failed for name:${_name}.\nNo such entity found in gameEntityList.` };
+                throw `Error: Entity removal failed for name:${_name}.\nNo such entity found in gameEntityList.`;
             }
         }
 
