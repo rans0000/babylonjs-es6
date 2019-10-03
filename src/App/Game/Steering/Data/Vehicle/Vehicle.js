@@ -68,12 +68,15 @@ class Vehicle extends MovingEntity {
                 const seekTarget = EntityManager.getEntityByName("seekTarget");
                 this.steering.toggleSeek(seekTarget);
                 this.steering.toggleFlee(false);
+                this.steering.toggleArrive(false);
+                this.steering.togglePursuit(false);
                 break;
             case MSG_TYPE.FLEE_MODE:
                 const fleeTarget = EntityManager.getEntityByName("seekTarget");
                 this.steering.toggleSeek(false);
                 this.steering.toggleFlee(fleeTarget);
                 this.steering.toggleArrive(false);
+                this.steering.togglePursuit(false);
                 break;
             case MSG_TYPE.TARGET_MOVED:
                 const target = EntityManager.getEntityByName("seekTarget");
@@ -81,22 +84,34 @@ class Vehicle extends MovingEntity {
                     this.steering.toggleSeek(target);
                     this.steering.toggleFlee(false);
                     this.steering.toggleArrive(false);
+                    this.steering.togglePursuit(false);
                 }
                 else if (this.steering.isFleeing) {
                     this.steering.toggleSeek(false);
                     this.steering.toggleFlee(target);
                     this.steering.toggleArrive(false);
+                    this.steering.togglePursuit(false);
                 }
                 else if (this.steering.isArriving) {
                     this.steering.toggleSeek(false);
                     this.steering.toggleFlee(false);
                     this.steering.toggleArrive(target);
+                    this.steering.togglePursuit(false);
                 }
                 break;
             case MSG_TYPE.ARRIVE_MODE:
                 const arriveTarget = EntityManager.getEntityByName("seekTarget");
+                this.steering.toggleSeek(false);
                 this.steering.toggleFlee(false);
                 this.steering.toggleArrive(arriveTarget);
+                this.steering.togglePursuit(false);
+                break;
+            case MSG_TYPE.PURSUIT_MODE:
+                const pursuitTarget = EntityManager.getEntityByName("seekTarget");
+                this.steering.toggleSeek(false);
+                this.steering.toggleFlee(false);
+                this.steering.toggleArrive(false);
+                this.steering.togglePursuit(pursuitTarget);
                 break;
             default:
                 break;

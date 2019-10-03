@@ -12,6 +12,8 @@ class SteeringBehaviours {
         this.fleeTargetPosition = null;
         this.isArriving = false;
         this.arriveTarge = null;
+        this.isPursuing = false;
+        this.pursuitTarget = null;
     }
 
     calculate() {
@@ -19,10 +21,12 @@ class SteeringBehaviours {
         const seekForce = this.seek();
         const fleeForce = this.flee();
         const arriveForce = this.arrive();
+        const pursuitForce = this.pursuit();
 
         totalForce.addInPlace(seekForce);
         totalForce.addInPlace(fleeForce);
         totalForce.addInPlace(arriveForce);
+        totalForce.addInPlace(pursuitForce);
 
         return totalForce;
     }
@@ -34,6 +38,8 @@ class SteeringBehaviours {
             this.seekTarget = seekTarget;
             this.isArriving = false;
             this.arriveTarge = null;
+            this.isPursuing = false;
+            this.pursuitTarget = null;
         }
         else {
             this.isSeeking = false;
@@ -41,12 +47,12 @@ class SteeringBehaviours {
         }
     }
 
-    seek() {
+    seek(seekPosition) {
         const entity = this.entity;
         let steeringVelocity = new Vector3.Zero();
 
-        if (this.isSeeking) {
-            const seekTargetPosition = this.seekTarget.position.clone();
+        if (this.isSeeking || seekPosition) {
+            const seekTargetPosition = seekPosition || this.seekTarget.position.clone();
             //@DESC: Calculate desired velocity.
             //@DESC: Desired Velocity = Position(target) - Position(agent).
             //@DESC: Normalize DesiredVelocity.
@@ -106,13 +112,15 @@ class SteeringBehaviours {
         //@DESC: Toggle arrive if valid target is passed and seek is disabled.
         if (arriveTarget) {
             this.isArriving = true;
-            this.arriveTarge = arriveTarget;
+            this.arriveTarget = arriveTarget;
             this.isSeeking = false;
             this.seekTarget = null;
+            this.isPursuing = false;
+            this.pursuitTarget = null;
         }
         else {
             this.isArriving = false;
-            this.arriveTarge = false;
+            this.arriveTarget = false;
         }
     }
 
@@ -120,7 +128,7 @@ class SteeringBehaviours {
         const entity = this.entity;
         let steeringVelocity = new Vector3.Zero();
         if (this.isArriving) {
-            const arriveTragetPosition = this.arriveTarge.position.clone();
+            const arriveTragetPosition = this.arriveTarget.position.clone();
             const toTarget = arriveTragetPosition.subtract(entity.position);
             const distanceToTarget = toTarget.length();
             //@TODO: deceleration should be enumerated to fast, normal and slow.
@@ -136,6 +144,55 @@ class SteeringBehaviours {
                 steeringVelocity = desiredVelocity.subtract(entity.velocity);
             }
         }
+
+        return steeringVelocity;
+    }
+
+    togglePursuit(pursuitTarget) {
+        //@DESC: Toggle arrive if valid target is passed and seek is disabled.
+        if (pursuitTarget) {
+            this.isArriving = false;
+            this.arriveTarge = null;
+            this.isSeeking = false;
+            this.seekTarget = null;
+            this.isPursuing = true;
+            this.pursuitTarget = pursuitTarget;
+        }
+        else {
+            this.isPursuing = false;
+            this.pursuitTarget = null;
+        }
+    }
+
+    pursuit() {
+        const entity = this.entity;
+        //@DESC: acos 0.95 = 18degs.
+        const DEGREE_18 = -0.95;
+        //@DESC: If the target is ahead of the agent, then we can just seek for the target's current position.
+        let steeringVelocity = new Vector3.Zero();
+
+        if (this.isPursuing) {
+            const toEvader = this.pursuitTarget.position.subtract(this.entity.position);
+            const evaderHeading = this.pursuitTarget.velocity.normalizeToNew();
+            const relativeHeading = Vector3.Dot(entity.heading, evaderHeading);
+
+            if (Vector3.Dot(toEvader, entity.heading) > 0 && relativeHeading < DEGREE_18) {
+                entity.steering.toggleSeek(this.pursuitTarget);
+                steeringVelocity = entity.steering.seek(this.pursuitTarget.position.clone());
+            }
+            else {
+                //@DESC: If target not ahead, we predict where the target will be.
+
+                //@DESC: The look ahed time is proportional to the distance between the target and pursuer
+                //and is inversely proportional to the sum of the agent's velocities.
+                const lookAheadTime = toEvader.length() / (entity.maxSpeed + this.pursuitTarget.velocity.length());
+
+                //@DESC: seek to the predicted position of the target
+                const targetPosition = this.pursuitTarget.velocity.scale(lookAheadTime).add(this.pursuitTarget.position);
+                steeringVelocity = entity.steering.seek(targetPosition);
+            }
+        }
+
 
         return steeringVelocity;
     }

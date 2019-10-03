@@ -72,11 +72,14 @@ class SeekTarget extends BaseGameEntity {
     handleMessage(message) {
         const messageType = message.messageType;
         if (messageType === MSG_TYPE.PURSUIT_MODE) {
-            this.moveMode = this.moveMode === ENTITY_MODES.SEEKER_JUMP_MODE ? ENTITY_MODES.SEEKER_RUN_MODE : ENTITY_MODES.SEEKER_JUMP_MODE;
-            this.velocity = new Vector3.Zero();
-            this.controlledMovement.idle();
+            //@DESC: reset velocity if seeker is not already in pursuit mode.
+            if (this.moveMode !== ENTITY_MODES.SEEKER_RUN_MODE) {
+                this.velocity = new Vector3.Zero();
+                this.moveMode = ENTITY_MODES.SEEKER_RUN_MODE;
+                this.controlledMovement.idle();
+            }
         }
-        else{
+        else {
             this.moveMode = ENTITY_MODES.SEEKER_JUMP_MODE;
             this.velocity = new Vector3.Zero();
             this.controlledMovement.idle();
