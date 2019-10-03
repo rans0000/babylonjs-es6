@@ -9,8 +9,8 @@ import EntityManager from "../../../../Classes/GameEntity/EntityManager";
 import SteeringBehaviours from "../../../../Classes/SteeringBehaviours/SteeringBehaviours";
 import { MSG_TYPE } from "../../../../Utils/Constants";
 
-class Vehicle extends MovingEntity{
-    constructor(config){
+class Vehicle extends MovingEntity {
+    constructor(config) {
         super(config);
         this.position = config.position || new Vector3.Zero();
         this.mesh = null;
@@ -20,16 +20,16 @@ class Vehicle extends MovingEntity{
         this.steering = new SteeringBehaviours(this);
     }
 
-    addToScene(scene){
-        let box = CylinderBuilder.CreateCylinder("cone1", {diameterTop: 0, diameterBottom: 2, tessellation: 4}, scene);
+    addToScene(scene) {
+        let box = CylinderBuilder.CreateCylinder("cone1", { diameterTop: 0, diameterBottom: 2, tessellation: 4 }, scene);
         box.position.y = 2;
-        box.rotation.x = Math.PI/2;
-        box.rotation.z = Math.PI/2;
+        box.rotation.x = Math.PI / 2;
+        box.rotation.z = Math.PI / 2;
         this.mesh = box;
         this.mesh.convertToFlatShadedMesh();
     }
 
-    update(timeInterval){
+    update(timeInterval) {
 
         //@DESC: Calculate the combined force from each steering behaviour the vehicle's list.
         const steeringForce = this.steering.calculate();
@@ -47,7 +47,7 @@ class Vehicle extends MovingEntity{
         const updatedVelocity = this.velocity.scale(timeInterval);
         this.position = this.position.add(updatedVelocity);
         //@DESC: Update the heading of Vehicle if velocity is greater than a small number
-        if(this.velocity.lengthSquared() > 0.00000001){
+        if (this.velocity.lengthSquared() > 0.00000001) {
             this.heading = (this.velocity.clone()).normalize();
             this.side = this.heading.clone();
             this.side.z = this.side.z * -1;
@@ -55,56 +55,48 @@ class Vehicle extends MovingEntity{
 
         //update the rendering mesh
         const mesh = this.mesh;
-        if(mesh){
+        if (mesh) {
             mesh.position = this.position.clone();
             mesh.rotation.y = Math.atan2(this.heading.z, -this.heading.x);
         }
     }
 
-    handleMessage(message){
+    handleMessage(message) {
 
-        switch(message.messageType) {
+        switch (message.messageType) {
             case MSG_TYPE.SEEK_MODE:
-                //@DESC: find position of seektarget object
                 const seekTarget = EntityManager.getEntityByName("seekTarget");
-                const seekPosition = seekTarget.position.clone();
-                this.steering.toggleSeek(seekPosition);
+                this.steering.toggleSeek(seekTarget);
                 this.steering.toggleFlee(false);
                 break;
             case MSG_TYPE.FLEE_MODE:
-                //@DESC: find position of fleetarget object
                 const fleeTarget = EntityManager.getEntityByName("seekTarget");
-                const fleePosition = fleeTarget.position.clone();
                 this.steering.toggleSeek(false);
-                this.steering.toggleFlee(fleePosition);
+                this.steering.toggleFlee(fleeTarget);
                 this.steering.toggleArrive(false);
                 break;
             case MSG_TYPE.TARGET_MOVED:
-                //@DESC: find position of target object
                 const target = EntityManager.getEntityByName("seekTarget");
-                const targetPosition = target.position.clone();
-                if(this.steering.isSeeking){
-                    this.steering.toggleSeek(targetPosition);
+                if (this.steering.isSeeking) {
+                    this.steering.toggleSeek(target);
                     this.steering.toggleFlee(false);
                     this.steering.toggleArrive(false);
                 }
-                else if(this.steering.isFleeing){
+                else if (this.steering.isFleeing) {
                     this.steering.toggleSeek(false);
-                    this.steering.toggleFlee(targetPosition);
+                    this.steering.toggleFlee(target);
                     this.steering.toggleArrive(false);
                 }
-                else if(this.steering.isArriving){
+                else if (this.steering.isArriving) {
                     this.steering.toggleSeek(false);
                     this.steering.toggleFlee(false);
-                    this.steering.toggleArrive(targetPosition);
+                    this.steering.toggleArrive(target);
                 }
                 break;
             case MSG_TYPE.ARRIVE_MODE:
-                //@DESC: find position of target object
                 const arriveTarget = EntityManager.getEntityByName("seekTarget");
-                const arriveTargetPosition = arriveTarget.position.clone();
                 this.steering.toggleFlee(false);
-                this.steering.toggleArrive(arriveTargetPosition);
+                this.steering.toggleArrive(arriveTarget);
                 break;
             default:
                 break;

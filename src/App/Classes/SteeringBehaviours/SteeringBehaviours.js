@@ -3,18 +3,18 @@
 
 import { Vector3 } from "@babylonjs/core/Maths/math";
 
-class SteeringBehaviours{
-    constructor(entity){
+class SteeringBehaviours {
+    constructor(entity) {
         this.entity = entity;
         this.isSeeking = false;
-        this.seekTargetPosition = null;
+        this.seekTarget = null;
         this.isFleeing = false;
         this.fleeTargetPosition = null;
         this.isArriving = false;
-        this.arriveTargetPosition = null;
+        this.arriveTarge = null;
     }
 
-    calculate(){
+    calculate() {
         let totalForce = new Vector3.Zero();
         const seekForce = this.seek();
         const fleeForce = this.flee();
@@ -27,26 +27,26 @@ class SteeringBehaviours{
         return totalForce;
     }
 
-    toggleSeek(seekTargetPosition){
+    toggleSeek(seekTarget) {
         //@DESC: toggle seeks if valid seektarget is passed.
-        if(seekTargetPosition){
+        if (seekTarget) {
             this.isSeeking = true;
-            this.seekTargetPosition = seekTargetPosition;
+            this.seekTarget = seekTarget;
             this.isArriving = false;
-            this.arriveTargetPosition = null;
+            this.arriveTarge = null;
         }
-        else{
+        else {
             this.isSeeking = false;
-            this.seekTargetPosition = null;
+            this.seekTarget = null;
         }
     }
 
-    seek(){
+    seek() {
         const entity = this.entity;
-        const seekTargetPosition = this.seekTargetPosition;
         let steeringVelocity = new Vector3.Zero();
 
-        if(this.isSeeking){
+        if (this.isSeeking) {
+            const seekTargetPosition = this.seekTarget.position.clone();
             //@DESC: Calculate desired velocity.
             //@DESC: Desired Velocity = Position(target) - Position(agent).
             //@DESC: Normalize DesiredVelocity.
@@ -64,66 +64,68 @@ class SteeringBehaviours{
         return steeringVelocity;
     }
 
-    toggleFlee(fleeTargetPosition){
+    toggleFlee(fleeTarget) {
         //@DESC: toggle flee if valid seektarget is passed.
-        if(fleeTargetPosition){
+        if (fleeTarget) {
             this.isFleeing = true;
-            this.fleeTargetPosition = fleeTargetPosition;
+            this.fleeTarget = fleeTarget;
         }
-        else{
+        else {
             this.isFleeing = false;
-            this.fleeTargetPosition = null;
+            this.fleeTarget = null;
         }
     }
 
-    flee(){
+    flee() {
         const entity = this.entity;
-        const fleeTargetPosition = this.fleeTargetPosition;
         let steeringVelocity = new Vector3.Zero();
         const panicDistance = 5 * 5; //panic distance is 4. hardcoded for now.
 
-        if(this.isFleeing && entity.position.subtract(fleeTargetPosition).lengthSquared() < panicDistance){
-            //@DESC: Calculate desired velocity if target position is less than panic distance.
-            //@DESC: Desired Velocity = Position(agent) - Position(target).
-            //@DESC: Normalize DesiredVelocity.
-            //@DESC: Scale desired velocity to maximum speed.
-            let desiredVelocity = entity.position.subtract(fleeTargetPosition);
-            desiredVelocity.normalize();
-            desiredVelocity = desiredVelocity.scale(entity.maxSpeed);
+        if (this.isFleeing) {
+            const fleeTargetPosition = this.fleeTarget.position.clone();
+            if (entity.position.subtract(fleeTargetPosition).lengthSquared() < panicDistance) {
+                //@DESC: Calculate desired velocity if target position is less than panic distance.
+                //@DESC: Desired Velocity = Position(agent) - Position(target).
+                //@DESC: Normalize DesiredVelocity.
+                //@DESC: Scale desired velocity to maximum speed.
+                let desiredVelocity = entity.position.subtract(fleeTargetPosition);
+                desiredVelocity.normalize();
+                desiredVelocity = desiredVelocity.scale(entity.maxSpeed);
 
-            //@DESC: Calculate steering force.
-            //@DESC: Steering force = Desired Velocity - Current Velocity.
-            steeringVelocity = desiredVelocity.subtract(entity.velocity);
-            //@DESC: Limit the steering force to the maximum force.
+                //@DESC: Calculate steering force.
+                //@DESC: Steering force = Desired Velocity - Current Velocity.
+                steeringVelocity = desiredVelocity.subtract(entity.velocity);
+                //@DESC: Limit the steering force to the maximum force.
+            }
         }
 
         return steeringVelocity;
     }
 
-    toggleArrive(arriveTargetPosition){
+    toggleArrive(arriveTarget) {
         //@DESC: Toggle arrive if valid target is passed and seek is disabled.
-        if(arriveTargetPosition){
+        if (arriveTarget) {
             this.isArriving = true;
-            this.arriveTargetPosition = arriveTargetPosition;
+            this.arriveTarge = arriveTarget;
             this.isSeeking = false;
-            this.seekTargetPosition = null;
+            this.seekTarget = null;
         }
-        else{
+        else {
             this.isArriving = false;
-            this.arriveTargetPosition = false;
+            this.arriveTarge = false;
         }
     }
 
-    arrive(){
+    arrive() {
         const entity = this.entity;
-        const arriveTragetPosition = this.arriveTargetPosition;
         let steeringVelocity = new Vector3.Zero();
-        if(this.isArriving){
+        if (this.isArriving) {
+            const arriveTragetPosition = this.arriveTarge.position.clone();
             const toTarget = arriveTragetPosition.subtract(entity.position);
             const distanceToTarget = toTarget.length();
             //@TODO: deceleration should be enumerated to fast, normal and slow.
-            
-            if(distanceToTarget > 0.00000001){
+
+            if (distanceToTarget > 0.00000001) {
                 //@DESC: ramp down the velocity if within the threshold.
                 const rampedSpeed = entity.maxSpeed * (distanceToTarget / entity.stoppingDistance);
                 //@DESC: clamping the velocity to max speed.
