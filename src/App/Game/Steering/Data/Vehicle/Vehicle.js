@@ -41,7 +41,8 @@ class Vehicle extends MovingEntity{
         //@DESC: Make sure the vehicle doesnot exceed the maximum speed.
         const length = this.velocity.length();
         let tempVelocity = this.velocity.clone();
-        this.velocity = length < this.maxSpeed ? this.velocity : tempVelocity.normalizeFromLength(this.maxSpeed);
+        const scaledVector = tempVelocity.normalizeToNew().scale(this.maxSpeed);
+        this.velocity = length < this.maxSpeed ? this.velocity : scaledVector;
         //@DESC: Update the position Position += Velocity * timeInterval.
         const updatedVelocity = this.velocity.scale(timeInterval);
         this.position = this.position.add(updatedVelocity);
