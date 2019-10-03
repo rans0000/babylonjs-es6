@@ -36,10 +36,6 @@ class SteeringBehaviours {
         if (seekTarget) {
             this.isSeeking = true;
             this.seekTarget = seekTarget;
-            this.isArriving = false;
-            this.arriveTarge = null;
-            this.isPursuing = false;
-            this.pursuitTarget = null;
         }
         else {
             this.isSeeking = false;
@@ -113,10 +109,6 @@ class SteeringBehaviours {
         if (arriveTarget) {
             this.isArriving = true;
             this.arriveTarget = arriveTarget;
-            this.isSeeking = false;
-            this.seekTarget = null;
-            this.isPursuing = false;
-            this.pursuitTarget = null;
         }
         else {
             this.isArriving = false;
@@ -151,10 +143,6 @@ class SteeringBehaviours {
     togglePursuit(pursuitTarget) {
         //@DESC: Toggle arrive if valid target is passed and seek is disabled.
         if (pursuitTarget) {
-            this.isArriving = false;
-            this.arriveTarge = null;
-            this.isSeeking = false;
-            this.seekTarget = null;
             this.isPursuing = true;
             this.pursuitTarget = pursuitTarget;
         }
