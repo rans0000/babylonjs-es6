@@ -78,6 +78,18 @@ class FlockUI {
             }
         });
 
+        //@DESC: Create pursue button
+        const wanderButton = GUI.createButton({
+            name: "btnWander",
+            text: "Wander",
+            left: "360px",
+            onClick: function () {
+                const buttonId = this.id;
+                const seekTargetId = EntityManager.getEntityByName("seekTarget").id;
+                const vehicleId = EntityManager.getEntityByName("vehicle").id;
+                MessageDispatcher.dispatchMessage(0, buttonId, [seekTargetId, vehicleId], MSG_TYPE.WANDER_MODE);
+            }
+        });
     }
 }
 

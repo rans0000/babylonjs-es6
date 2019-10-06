@@ -16,21 +16,26 @@ class SteeringBehaviours {
         this.pursuitTarget = null;
         this.isEvading = false;
         this.evadeTarget = null;
+        this.isWandering = false;
+        this.wanderAngle = 0;
     }
 
     calculate() {
+
         let totalForce = new Vector3.Zero();
         const seekForce = this.seek();
         const fleeForce = this.flee();
         const arriveForce = this.arrive();
         const pursuitForce = this.pursuit();
         const evadeForce = this.evade();
+        const wanderForce = this.wander();
 
         totalForce.addInPlace(seekForce);
         totalForce.addInPlace(fleeForce);
         totalForce.addInPlace(arriveForce);
         totalForce.addInPlace(pursuitForce);
         totalForce.addInPlace(evadeForce);
+        totalForce.addInPlace(wanderForce);
 
         return totalForce;
     }
@@ -215,6 +220,49 @@ class SteeringBehaviours {
             //@DESC: flee from the predicted position of the target
             const targetPosition = this.evadeTarget.velocity.scale(lookAheadTime).add(this.evadeTarget.position);
             steeringVelocity = entity.steering.flee(targetPosition);
+        }
+
+        return steeringVelocity;
+    }
+
+    toggleWander(wanderAngle) {
+        //@DESC: Toggle wander if valid target is passed.
+        if (wanderAngle) {
+            this.isWandering = true;
+            this.wanderAngle = 0;
+        }
+        else {
+            this.isWandering = false;
+            this.wanderAngle = 0;
+        }
+    }
+
+    wander() {
+        const entity = this.entity;
+        let steeringVelocity = new Vector3.Zero();
+        //@DESC: Radius of constraining circle.
+        const wanderRadius = 15;
+        //@DESC: Distance of constraining circle.
+        const wanderDistance = 0;
+        //@DESC: Maximum amount of random displacement that can happen to the target.
+        const jitter = 10;
+
+        if (this.isWandering) {
+            if (!this.wanderAngle) {
+                //@DESC: If no wandering target exists, create one in front of the agent.
+                this.wanderAngle = Vector3.Dot(new Vector3(0, 0, 0), entity.heading);
+            }
+            //jitterAngle is a value betwee -jitterAngle and +jitterAngle.
+            const jitterAngle = (Math.random() * 2 - 1) * jitter;
+            const angle = (this.wanderAngle + jitterAngle) % 360;
+            this.wanderAngle = angle;
+            //@DESC: Calculate the position of the target on the circumference based on the angele.
+            const targetX = Math.cos((Math.PI / 180) * angle) * wanderRadius;
+            const targetZ = Math.sin((Math.PI / 180) * angle) * wanderRadius;
+            //@DESC: Position the circle in front of the agent at the specified distance
+            const circleCenter = entity.heading.scale(wanderDistance).add(entity.position);
+            const position = circleCenter.add(new Vector3(targetX, 0, targetZ));
+            steeringVelocity = entity.steering.seek(position);
         }
 
         return steeringVelocity;

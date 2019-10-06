@@ -71,6 +71,7 @@ class Vehicle extends MovingEntity {
                 this.steering.toggleArrive(null);
                 this.steering.togglePursuit(null);
                 this.steering.toggleEvade(null);
+                this.steering.toggleWander(null);
                 break;
             case MSG_TYPE.FLEE_MODE:
                 const fleeTarget = EntityManager.getEntityByName("seekTarget");
@@ -79,6 +80,7 @@ class Vehicle extends MovingEntity {
                 this.steering.toggleArrive(null);
                 this.steering.togglePursuit(null);
                 this.steering.toggleEvade(null);
+                this.steering.toggleWander(null);
                 break;
             case MSG_TYPE.TARGET_MOVED:
                 const target = EntityManager.getEntityByName("seekTarget");
@@ -88,6 +90,7 @@ class Vehicle extends MovingEntity {
                     this.steering.toggleArrive(null);
                     this.steering.togglePursuit(null);
                     this.steering.toggleEvade(null);
+                    this.steering.toggleWander(null);
                 }
                 else if (this.steering.isFleeing) {
                     this.steering.toggleSeek(null);
@@ -95,6 +98,7 @@ class Vehicle extends MovingEntity {
                     this.steering.toggleArrive(null);
                     this.steering.togglePursuit(null);
                     this.steering.toggleEvade(null);
+                    this.steering.toggleWander(null);
                 }
                 else if (this.steering.isArriving) {
                     this.steering.toggleSeek(null);
@@ -102,6 +106,7 @@ class Vehicle extends MovingEntity {
                     this.steering.toggleArrive(target);
                     this.steering.togglePursuit(null);
                     this.steering.toggleEvade(null);
+                    this.steering.toggleWander(null);
                 }
                 break;
             case MSG_TYPE.ARRIVE_MODE:
@@ -111,6 +116,7 @@ class Vehicle extends MovingEntity {
                 this.steering.toggleArrive(arriveTarget);
                 this.steering.togglePursuit(null);
                 this.steering.toggleEvade(null);
+                this.steering.toggleWander(null);
                 break;
             case MSG_TYPE.PURSUIT_MODE:
                 const pursuitTarget = EntityManager.getEntityByName("seekTarget");
@@ -119,6 +125,7 @@ class Vehicle extends MovingEntity {
                 this.steering.toggleArrive(null);
                 this.steering.togglePursuit(pursuitTarget);
                 this.steering.toggleEvade(null);
+                this.steering.toggleWander(null);
                 break;
             case MSG_TYPE.EVADE_MODE:
                 const evadeTarget = EntityManager.getEntityByName("seekTarget");
@@ -127,6 +134,15 @@ class Vehicle extends MovingEntity {
                 this.steering.toggleArrive(null);
                 this.steering.togglePursuit(null);
                 this.steering.toggleEvade(evadeTarget);
+                this.steering.toggleWander(null);
+                break;
+            case MSG_TYPE.WANDER_MODE:
+                this.steering.toggleSeek(null);
+                this.steering.toggleFlee(null);
+                this.steering.toggleArrive(null);
+                this.steering.togglePursuit(null);
+                this.steering.toggleEvade(null);
+                this.steering.toggleWander(true);
                 break;
             default:
                 break;
