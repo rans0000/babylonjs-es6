@@ -5,8 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "pepjs": "^0.5.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
@@ -22,9 +22,9 @@
     "@babylonjs/post-processes": "^4.1.0",
     "@babylonjs/procedural-textures": "^4.1.0",
     "@babylonjs/serializers": "^4.1.0",
-    "babel-loader": "^8.1.0",
-    "css-loader": "^3.6.0",
-    "style-loader": "^0.23.1"
+    "babel-loader": "^8.3.0",
+    "css-loader": "^6.7.3",
+    "style-loader": "^3.3.1"
   },
   "scripts": {
     "start": "webpack-dev-server --content-base src/ --hot",
